@@ -14,7 +14,7 @@ bot.on('text', async (ctx, next) => {
   return next()
 })
 
-bot.command('humanize', ctx => {
+bot.command('hoomanize', ctx => {
   return startAction(ctx, bot)
 })
 
