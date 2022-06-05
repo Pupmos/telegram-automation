@@ -9,7 +9,7 @@ const openai = new OpenAIApi(configuration);
 export const translate = async function handler(text: string) {
   try {
     const trainingText = fs.readFileSync(
-      path.join(path.resolve(process.cwd(), "data"), "training.txt")
+      path.join(__dirname, "training.txt")
     );
     const sampleText = `dog: "${text}"\nhuman: `;
     const response = await openai.createCompletion("text-davinci-002", {
