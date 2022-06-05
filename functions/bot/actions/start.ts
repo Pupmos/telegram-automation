@@ -11,7 +11,7 @@ export const startAction = async (ctx: TelegrafContext, bot: Telegraf<TelegrafCo
   }
 
   try {
-    return ctx.reply('hello')
+    return ctx.reply(ctx.message.text)
   } catch (e) {
     return ctx.reply(`Error occured`)
   }
