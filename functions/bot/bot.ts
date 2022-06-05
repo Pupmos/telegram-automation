@@ -9,7 +9,7 @@ bot.start(ctx => {
   return startAction(ctx, bot)
 })
 
-bot.command('text', ctx => {
+bot.on('text', ctx => {
   return cacheAction(ctx, bot)
 })
 
