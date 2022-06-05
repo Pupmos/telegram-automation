@@ -26,7 +26,7 @@ Remember to fill in the environment variables on netlify - ```TELEGRAM_BOT_TOKEN
 Therafter, you need to specify and tell telegram where your bot should direct the messages it received to. Do so by simply visiting this url (without the ```{```, ```}```)
 
 ```
-https://api.telegram.org/bot{your_bot_token}/setWebhook?url={your_netlify_domain_url}/api/bot
+https://api.telegram.org/bot{your_telegram_secret}/setWebhook?url={your_netlify_domain_url}/api/bot
 ```
 
 If it is setup correctly it should reponse back with

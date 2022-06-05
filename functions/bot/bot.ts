@@ -1,13 +1,14 @@
-const Telegraf = require('telegraf');
-const startAction = require('./actions/start')
+import Telegraf from 'telegraf'
+import {startAction} from './actions/start'
 
+// @ts-ignore
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 
 bot.start(ctx => {
-  return startAction(ctx)
+  return startAction(ctx, bot)
 })
 
-exports.handler = async event => {
+export const handler = async event => {
   try {
     await bot.handleUpdate(JSON.parse(event.body));
     return { statusCode: 200, body: '' };
