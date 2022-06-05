@@ -8,10 +8,14 @@ import { translate } from "../components/translate"
 export const startAction = async (ctx: TelegrafContext, bot: Telegraf<TelegrafContext>) => {
   const { id, isBot, name } = getUser(ctx.from)
 
-  const msg = memcache.get(ctx.message.reply_to_message.message_id)
   if (isBot) {
     return ctx.reply(`Sorry I only interact with humans!`)
   }
+  const replyTargetId = ctx.message?.reply_to_message?.message_id;
+  if (!replyTargetId) {
+    return ctx.reply('message must be a reply!');
+  }
+  const msg = memcache.get(replyTargetId)
   if (!msg) {
     return ctx.reply(`I don't remember seeing that message!`)
   }
