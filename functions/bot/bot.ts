@@ -9,8 +9,9 @@ bot.start(ctx => {
   return startAction(ctx, bot)
 })
 
-bot.on('text', ctx => {
-  return cacheAction(ctx, bot)
+bot.on('text', async (ctx, next) => {
+  await cacheAction(ctx, bot)
+  return next()
 })
 
 bot.command('translate', ctx => {
