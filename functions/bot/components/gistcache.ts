@@ -33,7 +33,7 @@ const updateState = async (nextState: State) => {
 export const setItem = async (key: string, value: Message) => {
     const current = await loadState();
     current.set(key, value);
-    updateState(current)
+    await updateState(current)
 }
 
 export const getItem = async (key: string) => {
