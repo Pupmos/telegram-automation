@@ -2,7 +2,7 @@ import Telegraf from "telegraf"
 import { TelegrafContext } from "telegraf/typings/context"
 
 import { getUser } from '../components/helper'
-import { memcache } from "../components/memcache"
+import * as gistcache from "../components/gistcache"
 import { translate } from "../components/translate"
 
 export const startAction = async (ctx: TelegrafContext, bot: Telegraf<TelegrafContext>) => {
@@ -15,7 +15,7 @@ export const startAction = async (ctx: TelegrafContext, bot: Telegraf<TelegrafCo
   if (!replyTargetId) {
     return ctx.reply('message must be a reply!');
   }
-  const msg = memcache.get(replyTargetId)
+  const msg = await gistcache.getItem(replyTargetId.toString())
   if (!msg) {
     return ctx.reply(`I don't remember seeing that message!`)
   }

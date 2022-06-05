@@ -24,7 +24,7 @@ const updateState = async (nextState: State) => {
         description: "description",
         files: {
             [`pupmos-telegram-messages.json`]: {
-                content: JSON.stringify([...nextState]),
+                content: JSON.stringify([...nextState].slice(-10)),
             },
         },
     });
