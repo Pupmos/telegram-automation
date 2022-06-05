@@ -10,8 +10,9 @@ export const startAction = async (ctx: TelegrafContext, bot: Telegraf<TelegrafCo
     return ctx.reply(`Sorry I only interact with humans!`)
   }
 
+
   try {
-    return ctx.reply(ctx.message.text + (ctx.callbackQuery?.message?.caption || '') + ctx.inlineMessageId)
+    return ctx.reply(ctx.message.text + (ctx.callbackQuery?.message?.caption || '') + ctx.inlineMessageId + '' + JSON.stringify(ctx.message.reply_to_message))
   } catch (e) {
     return ctx.reply(`Error occured`)
   }
