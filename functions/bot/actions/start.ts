@@ -20,7 +20,9 @@ export const startAction = async (ctx: TelegrafContext, bot: Telegraf<TelegrafCo
     return ctx.reply(`I don't remember seeing that message!`)
   }
   try {
-    return ctx.reply(await translate(msg.text))
+    const formattedMessage = msg.text.split('\n').join(' ').split('\t').join(' ');
+    const translatedText = await translate(formattedMessage);
+    return ctx.reply(`tranzlashon: \\n\`"${translatedText}"\``)
   } catch (e) {
     return ctx.reply(`Error occured`)
   }
