@@ -8,6 +8,10 @@ bot.start(ctx => {
   return startAction(ctx, bot)
 })
 
+bot.command('translate', ctx => {
+  return startAction(ctx, bot)
+})
+
 export const handler = async event => {
   try {
     await bot.handleUpdate(JSON.parse(event.body));
