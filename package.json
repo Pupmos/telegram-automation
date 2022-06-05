@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@octokit/core": "^3.6.0",
     "@types/node": "^17.0.40",
     "netlify-lambda": "^2.0.1",
     "openai": "^2.0.5"
