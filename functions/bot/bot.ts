@@ -1,11 +1,17 @@
 import Telegraf from 'telegraf'
+import { cacheAction } from './actions/cache';
 import {startAction} from './actions/start'
+import { memcache } from './components/memcache';
 
 // @ts-ignore
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 
 bot.start(ctx => {
   return startAction(ctx, bot)
+})
+
+bot.command('text', ctx => {
+  return cacheAction(ctx, bot)
 })
 
 bot.command('translate', ctx => {
