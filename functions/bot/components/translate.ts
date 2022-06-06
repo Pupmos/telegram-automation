@@ -1,3 +1,4 @@
+import { Octokit } from "@octokit/core";
 import fetch from "cross-fetch";
 import { Configuration, OpenAIApi } from "openai";
 const configuration = new Configuration({
@@ -5,9 +6,18 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-const loadTrainingSample = async () => {
-    return fetch('https://gist.githubusercontent.com/siriustaikun/95b2324aa0d55b7bdf0a44a1bfb7a028/raw/248bd738f4ceab28a4e90ef89f6c7af689fcea0f/openai-training-samples.txt').then(r => r.text())
-}
+
+const octokit = new Octokit({ auth: process.env.GITHUB_GIST_TOKEN });
+const loadTrainingSample = async (): Promise<any> => {
+    console.error()
+    const gist = await octokit.request(
+        "GET /gists/95b2324aa0d55b7bdf0a44a1bfb7a028",
+        {
+            gist_id: "95b2324aa0d55b7bdf0a44a1bfb7a028",
+        }
+    );
+    return gist.data.files["openai-training-samples.txt"].content
+};
 
 export const translate = async function handler(text: string) {
   try {
