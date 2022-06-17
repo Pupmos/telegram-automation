@@ -1,4 +1,9 @@
-# Serverless Telegram Bot
+# GPT-3 Pupmos Translator Telegram Bot
+Uses OpenAI's GPT-3 language engine to translate pupspeak into human readable language. 
+
+* [training data sample](https://gist.github.com/siriustaikun/95b2324aa0d55b7bdf0a44a1bfb7a028)
+
+# Netlify Instructions
 
 Create a serverless Telegram Bot with database to keep track of users using Netlify Functions and FaunaDB
 
