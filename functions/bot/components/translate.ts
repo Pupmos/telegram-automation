@@ -9,7 +9,6 @@ const openai = new OpenAIApi(configuration);
 
 const octokit = new Octokit({ auth: process.env.GITHUB_GIST_TOKEN });
 const loadTrainingSample = async (): Promise<any> => {
-    console.error()
     const gist = await octokit.request(
         "GET /gists/95b2324aa0d55b7bdf0a44a1bfb7a028",
         {
