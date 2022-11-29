@@ -31,7 +31,7 @@ const loadTrainingSample = (() => {
 })();
 
 export const translate = async function handler(text: string, name: string) {
-  const process = (text) => {
+  const process = async (text) => {
     text = text.replace('/hoomanize ', '');
     let formattedText = text.replace('/pup ', '');
     const sampleText = formattedText == text ? `dog: "${text}"\nhuman: ` : `human: "${formattedText}"\ndog:`;
