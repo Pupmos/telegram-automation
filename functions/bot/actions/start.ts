@@ -28,7 +28,7 @@ export const startAction = async (ctx: TelegrafContext, bot: Telegraf<TelegrafCo
   // }
   try {
     const formattedMessage = msg.text.split('\n').join(' ').split('\t').join(' ');
-    const translatedText = await translate(formattedMessage).catch(() => translate(`${name} just said something incomprehenzibol. how do u rezpond?`));
+    const translatedText = await translate(formattedMessage, name);
     return ctx.replyWithMarkdownV2(`\`"${translatedText}"\``)
   } catch (e) {
     console.error(e);

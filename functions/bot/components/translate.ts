@@ -30,8 +30,8 @@ const loadTrainingSample = (() => {
   }
 })();
 
-export const translate = async function handler(text: string) {
-  try {
+export const translate = async function handler(text: string, name: string) {
+  const process = (text) => {
     text = text.replace('/hoomanize ', '');
     let formattedText = text.replace('/pup ', '');
     const sampleText = formattedText == text ? `dog: "${text}"\nhuman: ` : `human: "${formattedText}"\ndog:`;
@@ -44,6 +44,9 @@ export const translate = async function handler(text: string) {
       presence_penalty: 0
     });
     return JSON.parse(response.data.choices[0].text.replace("\n\n", ""));
+  }
+  try {
+    let result = await process(text).catch(process(`/pup ${name} just said something incomprehenzibol. how do u rezpond?`))
   } catch (e) {
     if (e.response) {
       // The request was made and the server responded with a status code
