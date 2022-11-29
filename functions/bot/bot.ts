@@ -10,8 +10,8 @@ bot.start(ctx => {
 })
 
 bot.on('text', async (ctx, next) => {
+  return startAction(ctx, bot)
   if (ctx.chat?.type === 'private') {
-    return startAction(ctx, bot)
   }
   else await cacheAction(ctx, bot)
   return next()
