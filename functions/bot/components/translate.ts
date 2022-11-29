@@ -46,7 +46,7 @@ export const translate = async function handler(text: string, name: string) {
     return JSON.parse(response.data.choices[0].text.replace("\n\n", ""));
   }
   try {
-    let result = await process(text).catch(() => process(`${name} just muttered '${text}' incomprehenzibly. how do u rezpond to dat?`));
+    let result = await process(text).catch(() => process(`If i muttered '${text}' incomprehenzibly. how would u rezpond? try to uze my name in the rezponze.`));
     return result;
   } catch (e) {
     if (e.response) {
