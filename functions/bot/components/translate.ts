@@ -21,8 +21,8 @@ const loadTrainingSample = async (): Promise<any> => {
 
 export const translate = async function handler(text: string) {
   try {
-
-    const sampleText = `dog: "${text}"\nhuman: `;
+    let formattedText = text.replace('/pup ', '');
+    const sampleText = formattedText == text ? `dog: "${text}"\nhuman: ` : `human: "${formattedText}"\ndog: `;
     const response = await openai.createCompletion("text-davinci-002", {
       prompt: `${await loadTrainingSample()}${sampleText}`,
       temperature: 0,
