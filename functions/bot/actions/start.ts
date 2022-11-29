@@ -8,7 +8,7 @@ import { Message } from "telegraf/typings/telegram-types"
 
 export const startAction = async (ctx: TelegrafContext, bot: Telegraf<TelegrafContext>) => {
   const { id, isBot, name } = getUser(ctx.from)
-
+  console.log({ id, isBot, name })
   if (isBot) {
     return ctx.reply(`Sorry I only interact with humans!`)
   }
