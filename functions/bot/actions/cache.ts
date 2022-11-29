@@ -6,6 +6,6 @@ const cacheUserId = 5312444028
 export const cacheAction = async (ctx: TelegrafContext, bot: Telegraf<TelegrafContext>) => {
   console.log({ from: ctx.from?.id, cacheUserId})
   if (!ctx.message) return console.error('no message! failed!');
-  await gistcache.setItem(ctx.message.message_id.toString(), ctx.message!)
+  // await gistcache.setItem(ctx.message.message_id.toString(), ctx.message!)
   return Promise.resolve(ctx)
 }
