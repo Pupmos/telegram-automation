@@ -46,7 +46,8 @@ export const translate = async function handler(text: string, name: string) {
     return JSON.parse(response.data.choices[0].text.replace("\n\n", ""));
   }
   try {
-    let result = await process(text).catch(() => process(`/pup ${name} just said something incomprehenzibol. how do u rezpond?`))
+    let result = await process(text).catch(() => process(`/pup ${name} just said something incomprehenzibol. how do u rezpond?`));
+    return result;
   } catch (e) {
     if (e.response) {
       // The request was made and the server responded with a status code
