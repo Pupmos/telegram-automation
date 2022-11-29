@@ -5,7 +5,6 @@ type State = Map<string, Message>;
 
 const octokit = new Octokit({ auth: process.env.GITHUB_GIST_TOKEN });
 const loadState = async (): Promise<State> => {
-    console.error()
     const gist = await octokit.request(
         "GET /gists/1059832a999c70d9d1b662b546f95003",
         {
