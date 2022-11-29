@@ -11,7 +11,6 @@ const loadState = async (): Promise<State> => {
             gist_id: "1059832a999c70d9d1b662b546f95003",
         }
     );
-    console.error(gist)
     const currentState = JSON.parse(
         gist.data.files["pupmos-telegram-messages.json"].content
     );
