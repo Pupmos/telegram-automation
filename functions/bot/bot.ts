@@ -28,6 +28,7 @@ bot.command('mint', ctx => {
 })
 
 bot.command('send', ctx => {
+  console.log('sending!')
   return transferCw20Action(ctx, bot)
 })
 
