@@ -2,7 +2,7 @@ import { assertIsDeliverTxSuccess, coins, QueryClient, setupFeegrantExtension, S
 import { Tendermint34Client } from '@cosmjs/tendermint-rpc'
 import { PeriodicAllowance, BasicAllowance } from "cosmjs-types/cosmos/feegrant/v1beta1/feegrant";
 import { Any } from "cosmjs-types/google/protobuf/any";
-import { MsgGrantAllowance } from "cosmjs-types/cosmos/feegrant/v1beta1/tx";
+import { MsgGrantAllowance, MsgRevokeAllowance } from "cosmjs-types/cosmos/feegrant/v1beta1/tx";
 import Long from "long";
 
 
@@ -53,6 +53,13 @@ export const grantFee = async (rpc: string, client: SigningStargateClient, denom
               }).finish(),
             ),
           };
+        const revokeMsg = {
+            typeUrl: "/cosmos.feegrant.v1beta1.MsgRevokeAllowance",
+            value: MsgRevokeAllowance.fromPartial({
+                granter: payer,
+                grantee: signer,
+            }),
+        };
         const grantMsg = {
           typeUrl: "/cosmos.feegrant.v1beta1.MsgGrantAllowance",
           value: MsgGrantAllowance.fromPartial({
@@ -61,7 +68,7 @@ export const grantFee = async (rpc: string, client: SigningStargateClient, denom
             allowance: allowance,
           }),
         };
-        const grantResult = await client.signAndBroadcast(payer, [grantMsg], "auto", "Create allowance").catch(e => {
+        const grantResult = await client.signAndBroadcast(payer, [revokeMsg, grantMsg], "auto", "Create allowance").catch(e => {
             console.log("FAILED TO RUN!")
             console.info(e);
         });
