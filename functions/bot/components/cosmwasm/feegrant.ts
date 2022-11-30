@@ -35,10 +35,20 @@ export const grantFee = async (rpc: string, client: SigningStargateClient, denom
                     },
                     period: {
                         seconds: Long.fromNumber(14),
-                        nanos: 0
+                        nanos: 1400000
                     },
-                    periodSpendLimit: [],
-                    periodCanSpend: []
+                    periodSpendLimit: [
+                        {
+                            denom: denom,
+                            amount: spendLimit,
+                        },
+                    ],
+                    periodCanSpend: [
+                        {
+                            denom: denom,
+                            amount: spendLimit,
+                        },
+                    ],
                 }).finish(),
             ),
         };

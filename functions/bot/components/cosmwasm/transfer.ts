@@ -28,7 +28,7 @@ export async function transferToken(contractAddress: string, amount: number, fro
         amount: coins('425', junoConfig.feeToken),
         gas: '169790',
         granter: rootSigner.address,
-        payer: fromUserSigner.address
+        // payer: fromUserSigner.address
     });
 
     return {
