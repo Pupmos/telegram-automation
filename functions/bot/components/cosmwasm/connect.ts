@@ -28,7 +28,7 @@ import {
       offlineSigner,
       {
         prefix,
-        gasPrice: GasPrice.fromString(gasPrice.toString()),
+        gasPrice: new GasPrice(gasPrice.amount, gasPrice.denom),
       }
     );
     // Init SigningCosmWasmClient client
