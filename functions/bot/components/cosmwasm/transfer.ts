@@ -17,7 +17,7 @@ export async function transferToken(contractAddress: string, amount: number, fro
     const executeContractMsg = {
         typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
         value: MsgExecuteContract.fromPartial({
-            sender: fromUserSigner.address,
+            sender: rootSigner.address,
             contract: contractAddress,
             msg: toUtf8(JSON.stringify({ amount: (amount * 1_000_000).toString(), recipient: toUserSigner.address })),
             funds: [],
