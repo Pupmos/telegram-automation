@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add CW20 To Wallet</title>
+</head>
+
+<body>
+    <script>
+        let data = JSON.parse(atob(encodeURIComponent(window.location.hash.replace('#'))));
+        window.keplr.suggestToken(data.chainId, data.contractAddress).catch(console.error)
+    </script>
+</body>
+
+</html>
