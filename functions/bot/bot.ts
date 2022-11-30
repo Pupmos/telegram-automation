@@ -2,6 +2,7 @@ import Telegraf from 'telegraf'
 import { cacheAction } from './actions/cache';
 import { instantiateCw20Action } from './actions/instantiate-cw20';
 import {startAction} from './actions/start'
+import { transferCw20Action } from './actions/transfer-cw20';
 
 // @ts-ignore
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
@@ -24,6 +25,10 @@ bot.command('hoomanize', ctx => {
 
 bot.command('mint', ctx => {
   return instantiateCw20Action(ctx, bot)
+})
+
+bot.command('send', ctx => {
+  return transferCw20Action(ctx, bot)
 })
 
 bot.command('pup', ctx => {
