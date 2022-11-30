@@ -9,16 +9,16 @@ import Long from "long";
 export const grantFee = async (rpc: string, client: SigningStargateClient, denom: string, spendLimit: string, payer: string, signer: string) => {
     const tmClient = await Tendermint34Client.connect(rpc);
         console.log({ setupFeegrantExtension})
-      const queryClient = QueryClient.withExtensions(tmClient, setupFeegrantExtension);
-      let allowanceExists: boolean;
-      try {
-        const _existingAllowance = await queryClient.feegrant.allowance(payer, signer);
-        allowanceExists = true;
-      } catch {
-        allowanceExists = false;
-      }
+    //   const queryClient = QueryClient.withExtensions(tmClient, setupFeegrantExtension);
+    //   let allowanceExists: boolean;
+    //   try {
+    //     const _existingAllowance = await queryClient.feegrant.allowance(payer, signer);
+    //     allowanceExists = true;
+    //   } catch {
+    //     allowanceExists = false;
+    //   }
 
-      if (!allowanceExists) {
+    //   if (!allowanceExists) {
         // Create feegrant allowance
         const allowance: Any = {
           typeUrl: "/cosmos.feegrant.v1beta1.BasicAllowance",
@@ -50,6 +50,6 @@ export const grantFee = async (rpc: string, client: SigningStargateClient, denom
           }),
         };
         const grantResult = await client.signAndBroadcast(payer, [grantMsg], "auto", "Create allowance");
-      }
+    //   }
     return true;
 }
