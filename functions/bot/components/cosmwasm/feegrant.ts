@@ -62,7 +62,9 @@ export const grantFee = async (rpc: string, client: SigningStargateClient, denom
             allowance: allowance,
           }),
         };
-        const grantResult = await client.signAndBroadcast(payer, [grantMsg], "auto", "Create allowance");
+        const grantResult = await client.signAndBroadcast(payer, [grantMsg], "auto", "Create allowance").catch(e => {
+            console.info(e);
+        });
     //   }
     return true;
 }
