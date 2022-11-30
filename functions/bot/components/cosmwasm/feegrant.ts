@@ -32,7 +32,7 @@ export const grantFee = async (rpc: string, client: SigningStargateClient, denom
                     ],
                 },
                 period: {
-                    seconds: Long.fromNumber(10),
+                    seconds: Long.fromNumber(14),
                     nanos: 0
                 },
                 periodSpendLimit: [],
