@@ -35,8 +35,9 @@ export const getAddressAction = async (ctx: TelegrafContext, bot: Telegraf<Teleg
     // let [_cmd, amount, contractAddress] = msg.text.split(' ');
     let mention = ([...msg.text.matchAll(/@\b([-a-zA-Z0-9._]{3,25})\b/gm)])?.[0]?.[1];
     console.log({ username: ctx.from!.username!, mention })
-    let { address } = await getAddress(ctx.from!.username!)
-    return ctx.reply(`ur addressh iz ${address}`)
+    let name = mention || ctx.from!.username!;
+    let { address } = await getAddress(name)
+    return ctx.reply(`the addressh for @${name} iz ${address}`)
   } catch (e) {
     console.error(e);
     return ctx.reply(`Error occured`)
