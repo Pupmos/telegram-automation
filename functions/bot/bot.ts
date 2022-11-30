@@ -1,5 +1,6 @@
 import Telegraf from 'telegraf'
 import { cacheAction } from './actions/cache';
+import { instantiateCw20Action } from './actions/instantiate-cw20';
 import {startAction} from './actions/start'
 
 // @ts-ignore
@@ -19,6 +20,10 @@ bot.on('text', async (ctx, next) => {
 
 bot.command('hoomanize', ctx => {
   return startAction(ctx, bot)
+})
+
+bot.command('mint', ctx => {
+  return instantiateCw20Action(ctx, bot)
 })
 
 bot.command('pup', ctx => {

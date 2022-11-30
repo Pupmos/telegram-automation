@@ -10,6 +10,7 @@ export interface Network {
   prefix: string;
   gasPrice: GasPrice;
   feeToken: string;
+  cw20CodeId: number;
 }
 
 export const junoConfig: Network = {
@@ -18,4 +19,5 @@ export const junoConfig: Network = {
   prefix: "juno",
   gasPrice: GasPrice.fromString("0.25ujuno"),
   feeToken: "ujuno",
+  cw20CodeId: 262
 };
