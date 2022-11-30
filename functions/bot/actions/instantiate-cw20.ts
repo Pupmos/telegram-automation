@@ -32,7 +32,7 @@ export const instantiateCw20Action = async (ctx: TelegrafContext, bot: Telegraf<
     // message = `/mint juno12345678910 3000 DOGGO
     let [_cmd, minterAddress, supply, symbol] = msg.text.split(' ');
     let data = await instantiateToken(minterAddress, parseInt(supply), symbol)
-    return ctx.reply(`https://pupmos-telegram-automation.netlify.app/api/add-cw20-to-wallet#${encodeURIComponent(btoa(JSON.stringify(data)))}`)
+    return ctx.reply(`https://pupmosbot.netlify.app/add-cw20-to-wallet.html#${encodeURIComponent(btoa(JSON.stringify(data)))}`)
   } catch (e) {
     console.error(e);
     return ctx.reply(`Error occured`)
