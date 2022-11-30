@@ -10,7 +10,7 @@ import { toBase64 } from "cosmwasm"
 import { transferToken } from "../components/cosmwasm/transfer"
 import { getAddress } from "../components/cosmwasm/getAddress"
 
-export const transferCw20Action = async (ctx: TelegrafContext, bot: Telegraf<TelegrafContext>) => {
+export const getAddressAction = async (ctx: TelegrafContext, bot: Telegraf<TelegrafContext>) => {
   const { id, isBot, name } = getUser(ctx.from)
   console.log({ id, isBot, name })
   if (isBot) {

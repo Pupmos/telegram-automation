@@ -1,4 +1,5 @@
 import Telegraf from 'telegraf'
+import { getAddressAction } from './actions/address-cw20';
 import { cacheAction } from './actions/cache';
 import { instantiateCw20Action } from './actions/instantiate-cw20';
 import {startAction} from './actions/start'
@@ -31,6 +32,11 @@ bot.command('send', ctx => {
   console.log('sending!')
   return transferCw20Action(ctx, bot)
 })
+
+bot.command('address', ctx => {
+  return getAddressAction(ctx, bot)
+})
+
 
 bot.command('pup', ctx => {
   return startAction(ctx, bot)
