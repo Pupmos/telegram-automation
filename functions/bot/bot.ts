@@ -10,13 +10,13 @@ bot.start(ctx => {
   return startAction(ctx, bot)
 })
 
-bot.on('text', async (ctx, next) => {
-  if (ctx.chat?.type === 'private') {
-    return startAction(ctx, bot)
-  }
-  else await cacheAction(ctx, bot)
-  return next()
-})
+// bot.on('text', async (ctx, next) => {
+//   if (ctx.chat?.type === 'private') {
+//     return startAction(ctx, bot)
+//   }
+//   else await cacheAction(ctx, bot)
+//   return next()
+// })
 
 bot.command('hoomanize', ctx => {
   return startAction(ctx, bot)
