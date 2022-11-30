@@ -23,6 +23,7 @@ export async function transferToken(contractAddress: string, amount: number, fro
             funds: [],
         }),
     };
+    fromUserSigner.stargateClient.registry.register('/cosmwasm.wasm.v1.MsgExecuteContract', MsgExecuteContract);
     const res = await fromUserSigner.stargateClient.signAndBroadcast(fromUserSigner.address, [executeContractMsg], {
         amount: coins('425', junoConfig.feeToken),
         gas: '169790',
