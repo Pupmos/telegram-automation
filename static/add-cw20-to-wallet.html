@@ -11,7 +11,9 @@
 <body>
     <script>
         let data = JSON.parse(atob(encodeURIComponent(window.location.hash.replace('#', ''))));
-        window.keplr.suggestToken(data.chainId, data.contractAddress).catch(console.error)
+        setTimeout(() => {
+            window.keplr.suggestToken(data.chainId, data.contractAddress).catch(console.error)
+        }, 250)
     </script>
 </body>
 
