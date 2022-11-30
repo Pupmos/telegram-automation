@@ -5,11 +5,12 @@ import { PeriodicAllowance, BasicAllowance } from "cosmjs-types/cosmos/feegrant/
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { MsgGrantAllowance, MsgRevokeAllowance } from "cosmjs-types/cosmos/feegrant/v1beta1/tx";
 import Long from "long";
+import { setupFeegrantExtension } from "./feegrantExtension";
 
 
 export const grantFee = async (rpc: string, client: SigningStargateClient, denom: string, spendLimit: string, payer: string, signer: string) => {
     const tmClient = await Tendermint34Client.connect(rpc);
-    const queryClient = QueryClient.withExtensions(tmClient, stargateModule.setupFeegrantExtension);
+    const queryClient = QueryClient.withExtensions(tmClient, setupFeegrantExtension);
     let allowanceExists: boolean;
     try {
         const _existingAllowance = await queryClient.feegrant.allowance(payer, signer);
