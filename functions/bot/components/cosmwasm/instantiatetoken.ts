@@ -7,7 +7,6 @@ import { junoConfig } from "./networks";
 
 export async function instantiateToken(minterAddress: string, supply: number, symbol: string, userId: number) {
     let rootSigner = await connect(process.env.COSMOS_MNEMONIC!, junoConfig, 0);
-    let userSigner = await connect(process.env.COSMOS_MNEMONIC!, junoConfig, userId);
     
     let msg: InstantiateMsg = {
         decimals: 6,
