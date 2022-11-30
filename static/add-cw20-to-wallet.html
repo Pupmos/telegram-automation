@@ -9,9 +9,11 @@
 </head>
 
 <body>
+    <pre id="data"></pre>
     <script>
         let data = JSON.parse(atob(encodeURIComponent(window.location.hash.replace('#', ''))));
         setTimeout(async () => {
+            document.getElementById('data').innerHTML = JSON.stringify(data, null, 2);
             await window.keplr.enable(data.chainId);
             await window.keplr.suggestToken(data.chainId, data.contractAddress).catch(console.error)
         }, 250)
