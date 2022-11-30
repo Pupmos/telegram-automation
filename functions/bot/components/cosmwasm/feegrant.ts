@@ -1,5 +1,5 @@
 import { assertIsDeliverTxSuccess, coins, QueryClient, SigningStargateClient } from "@cosmjs/stargate";
-import * as stargateModule from '@cosmjs/stargate'
+import * as stargateModule from '@cosmjs/stargate/build/modules/feegrant/queries'
 import { Tendermint34Client } from '@cosmjs/tendermint-rpc'
 import { PeriodicAllowance, BasicAllowance } from "cosmjs-types/cosmos/feegrant/v1beta1/feegrant";
 import { Any } from "cosmjs-types/google/protobuf/any";
