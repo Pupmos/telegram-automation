@@ -34,6 +34,7 @@ export const transferCw20Action = async (ctx: TelegrafContext, bot: Telegraf<Tel
     let [_cmd, amount, contractAddress] = msg.text.split(' ');
     let mention = ([...msg.text.matchAll(/@\b([-a-zA-Z0-9._]{3,25})\b/gm)])[0][1];
     console.log({ mention, amount, contractAddress })
+    console.log({ username: ctx.from!.username!, mention })
     let data = await transferToken(contractAddress, parseInt(amount), ctx.from!.username!, mention)
     return ctx.reply(`hemlø @${mention}! ${amount} ${contractAddress} haz been sent to ur addresh. follø dis lincc to add it to ur keplr wallet 🌭 \n\n https://pupmosbot.netlify.app/add-cw20-to-wallet.html#${encodeURIComponent(btoa(JSON.stringify(data)))}`)
   } catch (e) {
