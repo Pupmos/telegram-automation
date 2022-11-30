@@ -7,8 +7,7 @@ import Long from "long";
 
 
 export const grantFee = async (rpc: string, client: SigningStargateClient, denom: string, spendLimit: string, payer: string, signer: string) => {
-    const tmClient = await Tendermint34Client.connect(rpc);
-        console.log({ setupFeegrantExtension})
+    // const tmClient = await Tendermint34Client.connect(rpc);
     //   const queryClient = QueryClient.withExtensions(tmClient, setupFeegrantExtension);
     //   let allowanceExists: boolean;
     //   try {
@@ -63,8 +62,10 @@ export const grantFee = async (rpc: string, client: SigningStargateClient, denom
           }),
         };
         const grantResult = await client.signAndBroadcast(payer, [grantMsg], "auto", "Create allowance").catch(e => {
+            console.log("FAILED TO RUN!")
             console.info(e);
         });
+        console.log("FAILED GRACEFULLY")
     //   }
     return true;
 }

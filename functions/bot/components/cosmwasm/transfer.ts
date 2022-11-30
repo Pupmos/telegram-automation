@@ -29,7 +29,7 @@ export async function transferToken(contractAddress: string, amount: number, fro
         gas: '169790',
         granter: rootSigner.address,
         payer: fromUserSigner.address
-    }, 'pupbot transfer');
+    });
 
     return {
         height: res.height,
