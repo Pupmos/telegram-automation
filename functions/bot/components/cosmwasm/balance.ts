@@ -6,7 +6,7 @@ import { grantFee } from "./feegrant";
 import { junoConfig } from "./networks";
 
 
-export async function balance(contractAddress: string, fromUserId: number) {
+export async function balance(contractAddress: string, fromUserId: string) {
     let fromUserSigner = await connect(process.env.COSMOS_MNEMONIC!, junoConfig, fromUserId);
     let cw20 = new Cw20Client(fromUserSigner.client, fromUserSigner.address, contractAddress);
     let res = await cw20.balance({ address: fromUserSigner.address });

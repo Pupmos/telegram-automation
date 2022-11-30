@@ -11,12 +11,13 @@ import {
    * @param network 
    * @returns
    */
-  export async function connect(mnemonic: string, network: Network, accountIndex: number) {
+  export async function connect(mnemonic: string, network: Network, bip39Password?: string | undefined) {
     const { prefix, gasPrice, feeToken, rpcEndpoint } = network;
-    const hdPath = makeCosmoshubPath(accountIndex);
+    const hdPath = makeCosmoshubPath(0);
   
     // Setup signer
     const offlineSigner = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic, {
+      bip39Password,
       prefix,
       hdPaths: [hdPath],
     });
