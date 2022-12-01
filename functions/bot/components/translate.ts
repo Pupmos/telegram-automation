@@ -45,7 +45,8 @@ export const translate = async function handler(text: string, name: string, incr
       presence_penalty: 0
     });
     // certain markdown characters break telegram https://stackoverflow.com/a/71313944
-    return JSON.parse(response.data.choices[0].text.replace("\n\n", "").split('-').join(' ').replace(/\_/g, '\\_')
+    return JSON.parse(response.data.choices[0].text.replace("\n\n", ""))
+      .replace(/\_/g, '\\_')
       .replace(/\*/g, '\\*')
       .replace(/\[/g, '\\[')
       .replace(/\]/g, '\\]')
@@ -62,7 +63,7 @@ export const translate = async function handler(text: string, name: string, incr
       .replace(/\{/g, '\\{')
       .replace(/\}/g, '\\}')
       .replace(/\./g, '\\.')
-      .replace(/\!/g, '\\!'));
+      .replace(/\!/g, '\\!');
   }
   try {
     let result = await process(text).catch(() => process(`If i muttered '${text}' incomprehenzibly. how would u rezpond? try to uze my name in the rezponze.`));
