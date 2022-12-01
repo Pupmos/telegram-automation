@@ -28,7 +28,8 @@ export const startAction = async (ctx: TelegrafContext, bot: Telegraf<TelegrafCo
   // }
   try {
     const formattedMessage = msg.text.split('\n').join(' ').split('\t').join(' ');
-    const translatedText = await translate(formattedMessage, name);
+    let increaseInnocence = ctx.chat?.id === -1001261146654;
+    const translatedText = await translate(formattedMessage, name, increaseInnocence);
     console.log(`\n\n\nchat_id:${ctx.chat?.id}\nprompt: "${formattedMessage}"\n\nresponse: "${translatedText}"\n\n`)
     return ctx.replyWithMarkdownV2(`\`"${translatedText}"\``)
   } catch (e) {
