@@ -34,7 +34,8 @@ export const translate = async function handler(text: string, name: string, incr
   const process = async (text) => {
     text = text.replace('/hoomanize ', '');
     let formattedText = text.replace('/pup ', '');
-    const sampleText = formattedText == text ? `dog (named ${name}): "${text}"\nhuman: ` : `human (named ${name}): "${formattedText}"\ndog${` (very innocent)`}:`;
+    const dogModifier = increaseInnocence ? ` (very innocent)` : '';
+    const sampleText = formattedText == text ? `dog (named ${name}): "${text}"\nhuman: ` : `human (named ${name}): "${formattedText}"\ndog${dogModifier}:`;
     const response = await openai.createCompletion("text-davinci-002", {
       prompt: `${await loadTrainingSample()}${sampleText}`,
       temperature: 0,
