@@ -44,8 +44,25 @@ export const translate = async function handler(text: string, name: string, incr
       frequency_penalty: 0.5,
       presence_penalty: 0
     });
-    // dashes break telegram
-    return JSON.parse(response.data.choices[0].text.replace("\n\n", "").split('-').join(' '));
+    // certain markdown characters break telegram https://stackoverflow.com/a/71313944
+    return JSON.parse(response.data.choices[0].text.replace("\n\n", "").split('-').join(' ').replace(/\_/g, '\\_')
+      .replace(/\*/g, '\\*')
+      .replace(/\[/g, '\\[')
+      .replace(/\]/g, '\\]')
+      .replace(/\(/g, '\\(')
+      .replace(/\)/g, '\\)')
+      .replace(/\~/g, '\\~')
+      .replace(/\`/g, '\\`')
+      .replace(/\>/g, '\\>')
+      .replace(/\#/g, '\\#')
+      .replace(/\+/g, '\\+')
+      .replace(/\-/g, '\\-')
+      .replace(/\=/g, '\\=')
+      .replace(/\|/g, '\\|')
+      .replace(/\{/g, '\\{')
+      .replace(/\}/g, '\\}')
+      .replace(/\./g, '\\.')
+      .replace(/\!/g, '\\!'));
   }
   try {
     let result = await process(text).catch(() => process(`If i muttered '${text}' incomprehenzibly. how would u rezpond? try to uze my name in the rezponze.`));
