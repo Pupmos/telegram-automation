@@ -85,6 +85,6 @@ export const translate = async function handler(text: string, name: string, incr
       console.log('Error', e.message);
     }
     console.log(e.config);
-    return 'failed to translate'
+    return 'esscuze me butt i am nappin. u can not hav da zoomiez wifout da snooziez 🌭'
   }
 }
