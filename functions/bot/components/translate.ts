@@ -85,6 +85,13 @@ export const translate = async function handler(text: string, name: string, incr
       console.log('Error', e.message);
     }
     console.log(e.config);
-    return 'esscuze me butt i am nappin. u can not hav da zoomiez wifout da snooziez 🌭'
+    const responses = [
+      'esscuze me butt i am nappin. u can not hav da zoomiez wifout da snooziez 🌭',
+      'im ztil alive butt im barely breavin',
+      'i am zo zleepy',
+      'i can zee da lite. it iz bootifol.',
+      'da warm embraze. it feelz lyke i am goin hoam'
+    ];
+    return responses[Math.floor(Math.random() * responses.length)];
   }
 }
