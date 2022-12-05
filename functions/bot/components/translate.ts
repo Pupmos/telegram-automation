@@ -1,6 +1,7 @@
 import { Octokit } from "@octokit/core";
 import fetch from "cross-fetch";
 import { Configuration, OpenAIApi } from "openai";
+
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -96,6 +97,7 @@ export const translate = async function handler(
       console.log("Error", e.message);
     }
     console.log(e.config);
+
     const responses = [
       "esscuze me butt i am nappin. u can not hav da zoomiez wifout da snooziez 🌭",
       "im ztil alive butt im barely breavin",
@@ -109,8 +111,8 @@ export const translate = async function handler(
       "i am undergoin the operation for the next few hourz. pleez wizh me lucc.",
       "IIIII WILL ALWAYZ LOVB UUUUUUUUUUUUU. buttt i am zleepin rite nøw",
       "stahp azkin me queztionz. i am catchin pup on some snooziez.",
-      "all deez queztionz r makin me berrie zleepy."
+      "all deez queztionz r makin me berrie zleepy.",
     ];
-    return responses[Math.floor(Math.random() * responses.length)];
+    return "error:" + responses[Math.floor(Math.random() * responses.length)];
   }
 };

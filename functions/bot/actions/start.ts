@@ -5,6 +5,7 @@ import { getUser } from '../components/helper'
 import * as gistcache from "../components/gistcache"
 import { translate } from "../components/translate"
 import { Message } from "telegraf/typings/telegram-types"
+import * as revivalLogger from "../components/gist-bot-revival-logger";
 
 export const startAction = async (ctx: TelegrafContext, bot: Telegraf<TelegrafContext>) => {
   const { id, isBot, name } = getUser(ctx.from)
@@ -30,10 +31,22 @@ export const startAction = async (ctx: TelegrafContext, bot: Telegraf<TelegrafCo
     const formattedMessage = msg.text.split('\n').join(' ').split('\t').join(' ');
     let increaseInnocence = ctx.chat?.id === -1001261146654;
     // wait 5 seconds. slow down the bot until the open ai limit is increased
-    const translatedTextPromise = translate(formattedMessage, name, increaseInnocence).catch(e => 'esscuze me butt i am nappin. u can not hav da zoomiez wifout da snooziez 🌭');
+    const translatedTextPromise = translate(formattedMessage, name, increaseInnocence);
     await new Promise(resolve => setTimeout(resolve, 5000));
-    const translatedText = await translatedTextPromise;
+    let translatedText = await translatedTextPromise;
     // console.log(`\n\n\nchat_id:${ctx.chat?.id}\nprompt: "${formattedMessage}"\n\nresponse: "${translatedText}"\n\n`)
+    if (translatedText.startsWith('error:')) {
+      translatedText = translatedText.replace('error:', '');
+      revivalLogger.getItem(ctx.chat!.id.toString()).then((revivalMessages) => {
+        revivalMessages = revivalMessages || [];
+        if (revivalMessages.length > 3) {
+          // only need to save three per group.
+          return;
+        }
+        revivalMessages = [...revivalMessages, { chatId: ctx.chat!.id, message: msg }];
+        return revivalLogger.setItem(ctx.chat!.id.toString(), revivalMessages);
+      }).catch(console.error)
+    }
     return ctx.replyWithMarkdownV2(`\`"${translatedText}"\``, {
       reply_to_message_id: msg.message_id,
       allow_sending_without_reply: true
