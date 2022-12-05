@@ -105,6 +105,11 @@ export const translate = async function handler(
       "deafh smilez upon uz. all a pup can do iz zmile bacc.",
       "it iz the fear ov da snooziez da keepz uz alibe.",
       "i will hav da courag in da snooziez dat mozt never hav in da zoomiez.",
+      "i am puppared 2 meat my makor. az long az my maker alzo makez treetz. hehe",
+      "i am undergoin the operation for the next few hourz. pleez wizh me lucc.",
+      "IIIII WILL ALWAYZ LOVB UUUUUUUUUUUUU. buttt i am zleepin rite nøw",
+      "stahp azkin me queztionz. i am catchin pup on some snooziez.",
+      "all deez queztionz r makin me berrie zleepy."
     ];
     return responses[Math.floor(Math.random() * responses.length)];
   }
