@@ -30,7 +30,7 @@ export const startAction = async (ctx: TelegrafContext, bot: Telegraf<TelegrafCo
     const formattedMessage = msg.text.split('\n').join(' ').split('\t').join(' ');
     let increaseInnocence = ctx.chat?.id === -1001261146654;
     // wait 5 seconds. slow down the bot until the open ai limit is increased
-    const translatedTextPromise = translate(formattedMessage, name, increaseInnocence);
+    const translatedTextPromise = translate(formattedMessage, name, increaseInnocence).catch(e => 'esscuze me butt i am nappin. u can not hav da zoomiez wifout da snooziez 🌭');
     await new Promise(resolve => setTimeout(resolve, 5000));
     const translatedText = await translatedTextPromise;
     // console.log(`\n\n\nchat_id:${ctx.chat?.id}\nprompt: "${formattedMessage}"\n\nresponse: "${translatedText}"\n\n`)
