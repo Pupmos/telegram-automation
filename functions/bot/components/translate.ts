@@ -2,7 +2,7 @@ import { Octokit } from "@octokit/core";
 import fetch from "cross-fetch";
 import { Configuration, OpenAIApi } from "openai";
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY
+  apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
@@ -20,53 +20,64 @@ const loadTrainingSample = (() => {
         gist_id: "95b2324aa0d55b7bdf0a44a1bfb7a028",
       }
     );
-    return gist.data.files["openai-training-samples.txt"].content
-  }
+    return gist.data.files["openai-training-samples.txt"].content;
+  };
   return async () => {
     if (Date.now() - lastUpdated > CACHE_TIMEOUT) {
       data = await loadData();
     }
     return data;
-  }
+  };
 })();
 
-export const translate = async function handler(text: string, name: string, increaseInnocence = false) {
+export const translate = async function handler(
+  text: string,
+  name: string,
+  increaseInnocence = false
+) {
   const process = async (text) => {
-    text = text.replace('/hoomanize ', '');
-    let formattedText = text.replace('/pup ', '');
-    const dogModifier = increaseInnocence ? ` (very innocent)` : '';
-    const sampleText = formattedText == text ? `dog (named ${name}): "${text}"\nhuman: ` : `human (named ${name}): "${formattedText}"\ndog${dogModifier}:`;
+    text = text.replace("/hoomanize ", "");
+    let formattedText = text.replace("/pup ", "");
+    const dogModifier = increaseInnocence ? ` (very innocent)` : "";
+    const sampleText =
+      formattedText == text
+        ? `dog (named ${name}): "${text}"\nhuman: `
+        : `human (named ${name}): "${formattedText}"\ndog${dogModifier}:`;
     const response = await openai.createCompletion("text-davinci-002", {
       prompt: `${await loadTrainingSample()}${sampleText}`,
       temperature: 0,
       max_tokens: 147,
       top_p: 1,
       frequency_penalty: 0.5,
-      presence_penalty: 0
+      presence_penalty: 0,
     });
     // certain markdown characters break telegram https://stackoverflow.com/a/71313944
     return JSON.parse(response.data.choices[0].text.replace("\n\n", ""))
-      .replace(/\_/g, '\\_')
-      .replace(/\*/g, '\\*')
-      .replace(/\[/g, '\\[')
-      .replace(/\]/g, '\\]')
-      .replace(/\(/g, '\\(')
-      .replace(/\)/g, '\\)')
-      .replace(/\~/g, '\\~')
-      .replace(/\`/g, '\\`')
-      .replace(/\>/g, '\\>')
-      .replace(/\#/g, '\\#')
-      .replace(/\+/g, '\\+')
-      .replace(/\-/g, '\\-')
-      .replace(/\=/g, '\\=')
-      .replace(/\|/g, '\\|')
-      .replace(/\{/g, '\\{')
-      .replace(/\}/g, '\\}')
-      .replace(/\./g, '\\.')
-      .replace(/\!/g, '\\!');
-  }
+      .replace(/\_/g, "\\_")
+      .replace(/\*/g, "\\*")
+      .replace(/\[/g, "\\[")
+      .replace(/\]/g, "\\]")
+      .replace(/\(/g, "\\(")
+      .replace(/\)/g, "\\)")
+      .replace(/\~/g, "\\~")
+      .replace(/\`/g, "\\`")
+      .replace(/\>/g, "\\>")
+      .replace(/\#/g, "\\#")
+      .replace(/\+/g, "\\+")
+      .replace(/\-/g, "\\-")
+      .replace(/\=/g, "\\=")
+      .replace(/\|/g, "\\|")
+      .replace(/\{/g, "\\{")
+      .replace(/\}/g, "\\}")
+      .replace(/\./g, "\\.")
+      .replace(/\!/g, "\\!");
+  };
   try {
-    let result = await process(text).catch(() => process(`If i muttered '${text}' incomprehenzibly. how would u rezpond? try to uze my name in the rezponze.`));
+    let result = await process(text).catch(() =>
+      process(
+        `If i muttered '${text}' incomprehenzibly. how would u rezpond? try to uze my name in the rezponze.`
+      )
+    );
     return result;
   } catch (e) {
     if (e.response) {
@@ -82,16 +93,19 @@ export const translate = async function handler(text: string, name: string, incr
       console.log(e.request);
     } else {
       // Something happened in setting up the request that triggered an Error
-      console.log('Error', e.message);
+      console.log("Error", e.message);
     }
     console.log(e.config);
     const responses = [
-      'esscuze me butt i am nappin. u can not hav da zoomiez wifout da snooziez 🌭',
-      'im ztil alive butt im barely breavin',
-      'i am zo zleepy',
-      'i can zee da lite. it iz bootifol.',
-      'da warm embraze. it feelz lyke i am goin hoam'
+      "esscuze me butt i am nappin. u can not hav da zoomiez wifout da snooziez 🌭",
+      "im ztil alive butt im barely breavin",
+      "i am zo zleepy",
+      "i can zee da lite. it iz bootifol.",
+      "da warm embraze. it feelz lyke i am goin hoam",
+      "deafh smilez upon uz. all a pup can do iz zmile bacc.",
+      "it iz the fear ov da snooziez da keepz uz alibe.",
+      "i will hav da courag in da snooziez dat mozt never hav in da zoomiez.",
     ];
     return responses[Math.floor(Math.random() * responses.length)];
   }
-}
+};
