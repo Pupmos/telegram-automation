@@ -12,6 +12,12 @@ export async function transferToken(contractAddress: string, amount: number, fro
     let fromUserSigner = await connect(process.env.COSMOS_MNEMONIC!, defaultConfig, fromUserId);
     let toUserSigner = await connect(process.env.COSMOS_MNEMONIC!, defaultConfig, toUserId);
 
+    let fromUserBalance = await fromUserSigner.stargateClient.getBalance(fromUserSigner.address, defaultConfig.feeToken);
+    if (fromUserBalance.amount === '0') {
+        // create account
+        console.log('creating account...');
+        await rootSigner.stargateClient.sendTokens(rootSigner.address, fromUserSigner.address, coins('1', defaultConfig.feeToken), 'auto');
+    }
     await grantFee(defaultConfig.rpcEndpoint, rootSigner.stargateClient, defaultConfig.feeToken, '100000', rootSigner.address, fromUserSigner.address)
 
     const executeContractMsg = {
