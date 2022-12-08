@@ -12,12 +12,21 @@ export interface Network {
   feeToken: string;
   cw20CodeId: number;
 }
-
-export const junoConfig: Network = {
-  chainId: "juno-1",
-  rpcEndpoint: "https://rpc-juno.pupmos.network/",
-  prefix: "juno",
-  gasPrice: GasPrice.fromString("0.25ujuno"),
-  feeToken: "ujuno",
-  cw20CodeId: 262
+// https://rpc-chihuahua.pupmos.network/
+export const defaultConfig: Network = {
+  chainId: "chihuahua-1",
+  rpcEndpoint: "https://rpc-chihuahua.pupmos.network/",
+  prefix: "chihuahua",
+  gasPrice: GasPrice.fromString("0.25uhuahua"),
+  feeToken: "uhuahua",
+  cw20CodeId: 18
 };
+
+// export const defaultConfig: Network = {
+//   chainId: "juno-1",
+//   rpcEndpoint: "https://rpc-juno.pupmos.network/",
+//   prefix: "juno",
+//   gasPrice: GasPrice.fromString("0.25ujuno"),
+//   feeToken: "ujuno",
+//   cw20CodeId: 262
+// };
