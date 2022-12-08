@@ -11,7 +11,7 @@
 <body>
     <pre id="data"></pre>
     <script>
-        let data = JSON.parse(atob(encodeURIComponent(window.location.hash.replace('#', ''))));
+        let data = JSON.parse(atob(decodeURIComponent(window.location.hash.replace('#', ''))));
         setTimeout(async () => {
             document.getElementById('data').innerHTML = JSON.stringify(data, null, 2);
             await window.keplr.enable(data.chainId);
