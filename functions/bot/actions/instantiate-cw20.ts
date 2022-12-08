@@ -33,7 +33,7 @@ export const instantiateCw20Action = async (ctx: TelegrafContext, bot: Telegraf<
     let [_cmd, minterAddress, supply, symbol] = msg.text.split(' ');
     let data = await instantiateToken(minterAddress, parseInt(supply), symbol, +id)
     const ADD_TO_KEPLR_LINK = `https://pupmosbot.netlify.app/add-cw20-to-wallet.html#${encodeURIComponent(btoa(JSON.stringify(data)))}`;
-    return ctx.replyWithMarkdownV2(`hemlø @${username}! ${supply} ${symbol} haz been minted to ${minterAddress}. \n\n[Add to Keplr](${ADD_TO_KEPLR_LINK}) 🌭`)
+    return ctx.replyWithMarkdown(`hemlø @${username}! ${supply} ${symbol} haz been minted to ${minterAddress}. \n\n[Add to Keplr](${ADD_TO_KEPLR_LINK}) 🌭`)
   } catch (e) {
     console.error(e);
     return ctx.reply(`Error occured`)
