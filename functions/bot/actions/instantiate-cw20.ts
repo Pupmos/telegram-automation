@@ -34,9 +34,6 @@ export const instantiateCw20Action = async (
   try {
     // message = `/mint juno12345678910 3000 DOGGO
     let [_cmd, minterAddress, supply, symbol] = msg.text.split(" ");
-    ctx.replyWithMarkdown(
-      `minting ${supply} $${symbol}...`
-    ).catch(console.error);
     let data = await instantiateToken(
       minterAddress,
       parseInt(supply),
