@@ -40,11 +40,11 @@ export const instantiateCw20Action = async (
       symbol,
       +id
     )
-      .catch((e) => new Promise(resolve => setTimeout(resolve, 1000)))
+      .catch((e) => new Promise(resolve => setTimeout(resolve, 6000)))
       .then(() => instantiateToken(minterAddress, parseInt(supply), symbol, +id))
-      .catch((e) => new Promise(resolve => setTimeout(resolve, 1000)))
+      .catch((e) => new Promise(resolve => setTimeout(resolve, 6000)))
       .then(() => instantiateToken(minterAddress, parseInt(supply), symbol, +id))
-      .catch((e) => new Promise(resolve => setTimeout(resolve, 1000)))
+      .catch((e) => new Promise(resolve => setTimeout(resolve, 6000)))
       .then(() => instantiateToken(minterAddress, parseInt(supply), symbol, +id))
     const ADD_TO_KEPLR_LINK = `https://pupmosbot.netlify.app/add-cw20-to-wallet.html#${encodeURIComponent(
       btoa(JSON.stringify(data))
