@@ -44,7 +44,7 @@ bot.command('pup', ctx => {
 
 export const handler = async event => {
   try {
-    await bot.handleUpdate(JSON.parse(event.body));
+    await Promise.race([bot.handleUpdate(JSON.parse(event.body)), new Promise(resolve => setTimeout(resolve, 10000))]);
     return { statusCode: 200, body: '' };
   } catch (e) {
     console.log(e)
