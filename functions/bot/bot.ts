@@ -21,8 +21,8 @@ bot.on("text", async (ctx, next) => {
 
 bot.on("text", async (ctx, next) => {
   // respond to messages that start with pup without the slash
-  if (ctx.message?.text.startsWith("pup ")) {
-    ctx.message.text = ctx.message.text.replace("pup ", "");
+  if (ctx.message?.text.toLowerCase().startsWith("pup ")) {
+    ctx.message.text = ctx.message.text.replace(/^((p|P)+(u|U)+(p|P ))/g, "");
     return startAction(ctx, bot);
   }
   if (
