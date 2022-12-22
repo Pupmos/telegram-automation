@@ -27,7 +27,7 @@ bot.on("text", async (ctx, next) => {
   }
   if (
     // random message 10% of the time
-    (!ctx.message?.text.startsWith("/") && Math.random() < 0.1)
+    (!ctx.message?.text.startsWith("/") && Math.random() < 0.5)
   ) {
     return startAction(ctx, bot);
   }
