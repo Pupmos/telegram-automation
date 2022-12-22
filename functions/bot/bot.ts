@@ -19,27 +19,27 @@ bot.on("text", async (ctx, next) => {
   return next();
 });
 
-bot.on("text", async (ctx, next) => {
-  // respond to messages that start with pup without the slash
-  if (ctx.message?.text.toLowerCase().startsWith("pup ")) {
-    ctx.message.text = ctx.message.text.replace(/^((p|P)+(u|U)+(p|P ))/g, "");
-    return startAction(ctx, bot);
-  }
+// bot.on("text", async (ctx, next) => {
+//   // respond to messages that start with pup without the slash
+//   if (ctx.message?.text.toLowerCase().startsWith("pup ")) {
+//     ctx.message.text = ctx.message.text.replace(/^((p|P)+(u|U)+(p|P ))/g, "");
+//     return startAction(ctx, bot);
+//   }
 
-  const isRespondable =
-    ctx.message?.text.includes("?") ||
-    ctx.message?.text.includes("pup") ||
-    (ctx.message?.text.length || 0) >= 50;
-  if (
-    // random message 10% of the time
-    !ctx.message?.text.startsWith("/") &&
-    isRespondable &&
-    Math.random() < 0.001
-  ) {
-    return startAction(ctx, bot);
-  }
-  return next();
-});
+//   const isRespondable =
+//     ctx.message?.text.includes("?") ||
+//     ctx.message?.text.includes("pup") ||
+//     (ctx.message?.text.length || 0) >= 50;
+//   if (
+//     // random message 10% of the time
+//     !ctx.message?.text.startsWith("/") &&
+//     isRespondable &&
+//     Math.random() < 0.001
+//   ) {
+//     return startAction(ctx, bot);
+//   }
+//   return next();
+// });
 
 bot.command("hoomanize", (ctx) => {
   return startAction(ctx, bot);
