@@ -25,9 +25,16 @@ bot.on("text", async (ctx, next) => {
     ctx.message.text = ctx.message.text.replace(/^((p|P)+(u|U)+(p|P ))/g, "");
     return startAction(ctx, bot);
   }
+
+  const isRespondable =
+    ctx.message?.text.includes("?") ||
+    ctx.message?.text.includes("pup") ||
+    (ctx.message?.text.length || 0) >= 50;
   if (
     // random message 10% of the time
-    (!ctx.message?.text.startsWith("/") && Math.random() < 0.5)
+    !ctx.message?.text.startsWith("/") &&
+    isRespondable &&
+    Math.random() < 0.5
   ) {
     return startAction(ctx, bot);
   }
