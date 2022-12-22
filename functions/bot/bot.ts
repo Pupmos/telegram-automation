@@ -20,9 +20,12 @@ bot.on("text", async (ctx, next) => {
 });
 
 bot.on("text", async (ctx, next) => {
+  // respond to messages that start with pup without the slash
+  if (ctx.message?.text.startsWith("pup ")) {
+    ctx.message.text = ctx.message.text.replace("pup ", "");
+    return startAction(ctx, bot);
+  }
   if (
-    // respond to messages that start with pup without the slash
-    ctx.message?.text.startsWith("pup ") ||
     // random message 10% of the time
     (!ctx.message?.text.startsWith("/") && Math.random() < 0.1)
   ) {
