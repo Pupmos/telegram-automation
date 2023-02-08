@@ -27,7 +27,7 @@ export const junoConfig: Network = {
   chainId: "juno-1",
   rpcEndpoint: "https://rpc-juno.pupmos.network/",
   prefix: "juno",
-  gasPrice: GasPrice.fromString("5.5ujuno"),
+  gasPrice: GasPrice.fromString("0.25ujuno"),
   feeToken: "ujuno",
   cw20CodeId: 262
 };
