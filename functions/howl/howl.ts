@@ -21,7 +21,7 @@ export async function howlMentions() {
   let { posts: mentions } = await client.client.queryContractSmart(HOWL_ADDRESS, {
     list_mentions: {
       mentioned_alias: BOT_USERNAME,
-      limit: 4,
+      limit: 10,
     }
   });
   const hasAlreadyReplied = (postId: string) => {
