@@ -46,12 +46,12 @@ export const queryGPT = async function handler(
         : `human (named ${name}): "${formattedText}"\ndog${dogModifier}:`;
     const response = await openai.createCompletion("text-davinci-002", {
       prompt: `${await loadTrainingSample()}${sampleText}`,
-      temperature: 0.5,
+      temperature: 0.9,
       // 147
-      max_tokens: 50,
+      max_tokens: 70,
       top_p: 1,
-      frequency_penalty: 0.5,
-      presence_penalty: 0,
+      frequency_penalty: -0.5,
+      presence_penalty: -1,
     });
     // certain markdown characters break telegram https://stackoverflow.com/a/71313944
     return JSON.parse(response.data.choices[0].text.replaceAll("\n\n", ""))

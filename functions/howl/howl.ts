@@ -55,7 +55,7 @@ export async function howlMentions() {
       console.log('already replied to:' + m.post.body)
       continue;
     }
-    const formattedText = m.post.body;
+    const formattedText = m.post.body.replaceAll('@' + BOT_USERNAME, '').replaceAll(BOT_USERNAME, '')
     const increaseInnocence = false;
     const dogModifier = increaseInnocence ? ` (very innocent)` : "";
     const sampleText = `human (named ${m.post.creator}): "${formattedText}"\ndog${dogModifier}:`;
