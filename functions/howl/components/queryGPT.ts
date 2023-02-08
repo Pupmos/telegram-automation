@@ -46,7 +46,7 @@ export const queryGPT = async function handler(
         : `human (named ${name}): "${formattedText}"\ndog${dogModifier}:`;
     const response = await openai.createCompletion("text-davinci-002", {
       prompt: `${await loadTrainingSample()}${sampleText}`,
-      temperature: 0,
+      temperature: 0.5,
       // 147
       max_tokens: 50,
       top_p: 1,
