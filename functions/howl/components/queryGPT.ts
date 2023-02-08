@@ -114,6 +114,6 @@ export const queryGPT = async function handler(
       "stahp azkin me queztionz. i am catchin pup on some snooziez.",
       "all deez queztionz r makin me berrie zleepy.",
     ];
-    return "error:" + responses[Math.floor(Math.random() * responses.length)];
+    return responses[Math.floor(Math.random() * responses.length)];
   }
 };

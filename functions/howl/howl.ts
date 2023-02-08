@@ -21,7 +21,7 @@ export async function howlMentions() {
   let { posts: mentions } = await client.client.queryContractSmart(HOWL_ADDRESS, {
     list_mentions: {
       mentioned_alias: BOT_USERNAME,
-      limit: 20,
+      limit: 4,
     }
   });
   const hasAlreadyReplied = (postId: string) => {
@@ -48,8 +48,10 @@ export async function howlMentions() {
 
   console.log(mentions)
 
+  const hasAlreadyRepliedRes = mentions.map(m => hasAlreadyReplied(m.uuid))
+  let i = 0;
   for (let m of mentions) {
-    if (await hasAlreadyReplied(m.uuid)) {
+    if (await hasAlreadyRepliedRes[i++]) {
       console.log('already replied to:' + m.post.body)
       continue;
     }
@@ -85,13 +87,7 @@ export async function howlMentions() {
     // burn token message 
     client.stargateClient.registry.register('/cosmwasm.wasm.v1.MsgExecuteContract', MsgExecuteContract);
     const res = await client.stargateClient.signAndBroadcast(client.address, [executeContractMsg], 'auto');
-    while (true) {
-      const tx = await client.stargateClient.getTx(res.transactionHash)
-      console.log(tx)
-      if (tx !== null) {
-        break;
-      }
-    }
+    // assume it works out.
     // break once it's successful. only do one at a time.
     break;
   }
@@ -138,12 +134,12 @@ export async function howlMentions() {
 export const handler = async (event) => {
   try {
     await howlMentions()
-    return { statusCode: 200, body: "" };
+    return { statusCode: 200, body: "succesh!" };
   } catch (e) {
     console.log(e);
     return {
       statusCode: 400,
-      body: "This endpoint is meant for bot and telegram communication",
+      body: "error with chatgpt",
     };
   }
 };
