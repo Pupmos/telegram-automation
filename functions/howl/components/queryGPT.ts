@@ -38,20 +38,19 @@ export const queryGPT = async function handler(
 ) {
   const process = async (text) => {
     text = text.replace("/hoomanize ", "");
-    let formattedText = text.replace("/pup ", "");
+    const isDog = true;
     const dogModifier = increaseInnocence ? ` (very innocent)` : "";
     const sampleText =
-      formattedText == text
+      !isDog
         ? `dog (named ${name}): "${text}"\nhuman: `
-        : `human (named ${name}): "${formattedText}"\ndog${dogModifier}:`;
+        : `human (named ${name}): "${text}"\ndog${dogModifier}:`;
     const response = await openai.createCompletion("text-davinci-002", {
       prompt: `${await loadTrainingSample()}${sampleText}`,
-      temperature: 0.9,
-      // 147
-      max_tokens: 70,
+      temperature: 0,
+      max_tokens: 147,
       top_p: 1,
-      frequency_penalty: -0.5,
-      presence_penalty: -1,
+      frequency_penalty: 0.5,
+      presence_penalty: 0,
     });
     // certain markdown characters break telegram https://stackoverflow.com/a/71313944
     return JSON.parse(response.data.choices[0].text.replaceAll("\n\n", ""))
