@@ -56,7 +56,7 @@ export async function howlMentions() {
       continue;
     }
     const formattedText = m.post.body;
-    const increaseInnocence = true;
+    const increaseInnocence = false;
     const dogModifier = increaseInnocence ? ` (very innocent)` : "";
     const sampleText = `human (named ${m.post.creator}): "${formattedText}"\ndog${dogModifier}:`;
     console.log(sampleText)
