@@ -22,7 +22,6 @@ export async function howlMentions() {
     list_mentions: {
       mentioned_alias: BOT_USERNAME,
       limit: 20,
-      skip: 1
     }
   });
   const hasAlreadyReplied = (postId: string) => {
@@ -93,6 +92,8 @@ export async function howlMentions() {
         break;
       }
     }
+    // break once it's successful. only do one at a time.
+    break;
   }
 
   // Sample Output: 
