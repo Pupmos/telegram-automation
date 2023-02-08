@@ -136,7 +136,7 @@ export async function howlMentions() {
 
 export const handler = async (event) => {
   try {
-    howlMentions()
+    await howlMentions()
     return { statusCode: 200, body: "" };
   } catch (e) {
     console.log(e);
