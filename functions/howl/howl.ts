@@ -133,12 +133,13 @@ export async function howlMentions() {
 
 export const handler = async (event) => {
   try {
-    await howlMentions()
+    howlMentions()
+    await new Promise(r => setTimeout(r, 9500))
     return { statusCode: 200, body: "succesh!" };
   } catch (e) {
     console.log(e);
     return {
-      statusCode: 400,
+      statusCode: 200,
       body: "error with chatgpt",
     };
   }
