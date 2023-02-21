@@ -59,8 +59,7 @@ function randomResponseLabel() {
     "decizion",
     "verdickt",
   ];
-  // return labels[Math.floor(Math.random() * labels.length)].toUpperCase();
-  return "🤖 PUPAI OVORLORD 🐾⚔️: ";
+  return labels[Math.floor(Math.random() * labels.length)].toUpperCase();
 }
 export async function howlMentions() {
   const BOT_USERNAME = "pupai";
@@ -199,9 +198,7 @@ export async function howlMentions() {
               msg: {
                 propose: {
                   title: (
-                    `${randomResponseLabel()}: ` +
-                    responses.map((p) => p.proposal_id).join(", ") +
-                    ": " +
+                    `🤖 PUPAI OVORLORD: ` +
                     responses
                       .map((p) => {
                         return p.title;
@@ -228,12 +225,14 @@ export async function howlMentions() {
       }),
     });
   }
-  const res = await client.client.signAndBroadcast(
-    client.address,
-    messages,
-    "auto"
-  );
-  console.log({ res });
+  if (messages.length) {
+    const res = await client.client.signAndBroadcast(
+      client.address,
+      messages,
+      "auto"
+    );
+    console.log({ res });
+  }
   // const hasAlreadyReplied = (postId: string) => {
   //   console.log({ postId })
   //   return client.client.queryContractSmart(HOWL_ADDRESS, {
@@ -301,8 +300,6 @@ export async function howlMentions() {
   //   // break once it's successful. only do one at a time.
   //   break;
   // }
-
-  console.log(JSON.stringify(proposals, null, 2));
 }
 
 export const handler = async (event) => {
