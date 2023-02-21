@@ -84,6 +84,7 @@ export async function howlMentions() {
     proposal_id: string;
     title: string;
     description: string;
+    raw: string;
   }[] = [];
   const messages: EncodeObject[] = [];
   for (let { proposal, id } of proposals) {
@@ -150,6 +151,7 @@ export async function howlMentions() {
         proposal_id: id,
         title,
         description,
+        raw: reason,
       });
       messages.push({
         typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
@@ -198,7 +200,7 @@ export async function howlMentions() {
                     responses.map((p) => p.proposal_id).join(", ") +
                     ":" +
                     responses.map((p) => p.title).join(", ")
-                  ).substring(0, 40),
+                  ).substring(0, 250),
                   description: responses
                     .map((p) => {
                       return `## ${p.proposal_id}: ${p.description}`;
