@@ -145,7 +145,7 @@ export async function howlMentions() {
     if (isOpen) {
       // the title of the response proposal should be the first X sentences of the reason cumulatively under 40 characters
       // the description should be the entire reason
-      const title = reason.substring(0, 40);
+      const title = reason.substring(0, 250);
       const description = reason;
 
       responses.push({
