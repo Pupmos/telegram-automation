@@ -95,7 +95,8 @@ export async function howlMentions() {
     if (!prompt || !isOpen) {
       if (proposal.proposer === client.address && !isExecuted) {
         // execute the proposal to pay back deposit to the bot.
-        messages.push({
+        // uses unshift so the deposit can be returned before the next deposit is made
+        messages.unshift({
           typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
           value: MsgExecuteContract.fromPartial({
             sender: client.address,
@@ -181,7 +182,7 @@ export async function howlMentions() {
           amount: [
             {
               denom: "ujuno",
-              amount: 0.3 * 1e6 + "",
+              amount: 0.75 * 1e6 + "",
             },
           ],
         },
