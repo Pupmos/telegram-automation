@@ -59,7 +59,8 @@ function randomResponseLabel() {
     "decizion",
     "verdickt",
   ];
-  return labels[Math.floor(Math.random() * labels.length)].toUpperCase();
+  // return labels[Math.floor(Math.random() * labels.length)].toUpperCase();
+  return "🤖 PUPAI OVORLORD 🐾⚔️: ";
 }
 export async function howlMentions() {
   const BOT_USERNAME = "pupai";
@@ -84,6 +85,7 @@ export async function howlMentions() {
     proposal_id: string;
     title: string;
     description: string;
+    is_worthy: boolean;
     raw: string;
   }[] = [];
   const messages: EncodeObject[] = [];
@@ -152,6 +154,7 @@ export async function howlMentions() {
         title,
         description,
         raw: reason,
+        is_worthy: vote === "yes",
       });
       messages.push({
         typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
@@ -198,8 +201,12 @@ export async function howlMentions() {
                   title: (
                     `${randomResponseLabel()}: ` +
                     responses.map((p) => p.proposal_id).join(", ") +
-                    ":" +
-                    responses.map((p) => p.title).join(", ")
+                    ": " +
+                    responses
+                      .map((p) => {
+                        return p.title;
+                      })
+                      .join(", ")
                   ).substring(0, 250),
                   description: responses
                     .map((p) => {
