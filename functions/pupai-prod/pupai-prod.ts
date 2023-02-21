@@ -168,8 +168,21 @@ export async function howlMentions() {
       });
     }
   }
-
   if (responses.length) {
+    // include a little bit of juno to pay for the txs so the bot pays for itself.
+    const bankMsg = {
+      bank: {
+        send: {
+          to_address: client.address,
+          amount: [
+            {
+              denom: "ujuno",
+              amount: 0.3 * 1e6 + "",
+            },
+          ],
+        },
+      },
+    };
     messages.push({
       typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
       value: MsgExecuteContract.fromPartial({
@@ -191,7 +204,7 @@ export async function howlMentions() {
                       return `## ${p.proposal_id}: ${p.description}`;
                     })
                     .join("\n\n\n"),
-                  msgs: [],
+                  msgs: [bankMsg],
                 },
               },
             },
