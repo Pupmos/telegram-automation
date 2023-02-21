@@ -207,7 +207,7 @@ export async function howlMentions() {
                   ).substring(0, 250),
                   description: responses
                     .map((p) => {
-                      return `## ${p.proposal_id}: ${p.description}`;
+                      return `# *\`${p.description}\`*`;
                     })
                     .join("\n\n\n"),
                   msgs: [bankMsg],
