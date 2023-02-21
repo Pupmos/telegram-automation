@@ -220,7 +220,7 @@ export async function howlMentions() {
         funds: [
           {
             denom: "ujuno",
-            amount: 2.049 * 1e6 + "",
+            amount: 1.2049 * 1e6 + "",
           },
         ],
       }),
