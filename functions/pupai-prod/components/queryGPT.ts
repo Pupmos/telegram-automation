@@ -43,7 +43,7 @@ export const queryGPT = async function handler(
 <!-- PUPAI JOB SAMPLE -->
 ${text}
 
-<!-- PUPAI OUTPUT SAMPLE -->`
+<!-- PUPAI OUTPUT SAMPLE -->`;
     const response = await openai.createCompletion("text-davinci-003", {
       prompt: `${await loadTrainingSample()}${sampleText}`,
       temperature: 0.7,
@@ -52,26 +52,27 @@ ${text}
       frequency_penalty: 0,
       presence_penalty: 0,
     });
+    const resText = response.data.choices?.[0].text;
     // certain markdown characters break telegram https://stackoverflow.com/a/71313944
-    return JSON.parse(response.data.choices[0].text.replaceAll("\n\n", ""))
-      // .replace(/\_/g, "\\_")
-      // .replace(/\*/g, "\\*")
-      // .replace(/\[/g, "\\[")
-      // .replace(/\]/g, "\\]")
-      // .replace(/\(/g, "\\(")
-      // .replace(/\)/g, "\\)")
-      // .replace(/\~/g, "\\~")
-      // .replace(/\`/g, "\\`")
-      // .replace(/\>/g, "\\>")
-      // .replace(/\#/g, "\\#")
-      // .replace(/\+/g, "\\+")
-      // .replace(/\-/g, "\\-")
-      // .replace(/\=/g, "\\=")
-      // .replace(/\|/g, "\\|")
-      // .replace(/\{/g, "\\{")
-      // .replace(/\}/g, "\\}")
-      // .replace(/\./g, "\\.")
-      // .replace(/\!/g, "\\!");
+    return resText!;
+    // .replace(/\_/g, "\\_")
+    // .replace(/\*/g, "\\*")
+    // .replace(/\[/g, "\\[")
+    // .replace(/\]/g, "\\]")
+    // .replace(/\(/g, "\\(")
+    // .replace(/\)/g, "\\)")
+    // .replace(/\~/g, "\\~")
+    // .replace(/\`/g, "\\`")
+    // .replace(/\>/g, "\\>")
+    // .replace(/\#/g, "\\#")
+    // .replace(/\+/g, "\\+")
+    // .replace(/\-/g, "\\-")
+    // .replace(/\=/g, "\\=")
+    // .replace(/\|/g, "\\|")
+    // .replace(/\{/g, "\\{")
+    // .replace(/\}/g, "\\}")
+    // .replace(/\./g, "\\.")
+    // .replace(/\!/g, "\\!");
   };
   try {
     let result = await process(text);

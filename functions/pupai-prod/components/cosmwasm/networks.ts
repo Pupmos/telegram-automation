@@ -2,8 +2,7 @@
 // not too shabby so i'll keep it for the time being.
 
 // data from https://github.com/cosmos/chain-registry/tree/master/testnets
-import { SigningStargateClient, GasPrice } from '@cosmjs/stargate'
-
+import { SigningStargateClient, GasPrice } from "@cosmjs/stargate";
 
 export interface Network {
   chainId: string;
@@ -20,7 +19,7 @@ export const defaultConfig: Network = {
   prefix: "chihuahua",
   gasPrice: GasPrice.fromString("0.25uhuahua"),
   feeToken: "uhuahua",
-  cw20CodeId: 18
+  cw20CodeId: 18,
 };
 
 export const junoConfig: Network = {
@@ -29,5 +28,5 @@ export const junoConfig: Network = {
   prefix: "juno",
   gasPrice: GasPrice.fromString("0.25ujuno"),
   feeToken: "ujuno",
-  cw20CodeId: 262
+  cw20CodeId: 262,
 };

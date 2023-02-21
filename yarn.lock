@@ -5519,7 +5519,7 @@ cosmjs-types@^0.5.0, cosmjs-types@^0.5.2:
 
 cosmwasm@^1.1.1:
   version "1.1.1"
-  resolved "https://registry.npmjs.org/cosmwasm/-/cosmwasm-1.1.1.tgz"
+  resolved "https://registry.npmjs.org/cosmwasm/-/cosmwasm-1.1.1.tgz#02b22a269044c61714c85fa55e624b2f83f7c086"
   integrity sha512-tjpjwnRIQ6VEcTVB0Pq8+F+Xp6jdnC3BcXmcDHCJHIc5Gg4Mm++AA+6fTfR0yuiPbEAk6wYkokfLtv12I0sPNQ==
   dependencies:
     "@cosmjs/amino" "^0.28.3"
