@@ -198,7 +198,7 @@ export async function howlMentions() {
               msg: {
                 propose: {
                   title: (
-                    `🤖 PUPAI: ` +
+                    `🐶 PUPAI: ` +
                     responses
                       .map((p) => {
                         return p.title;
