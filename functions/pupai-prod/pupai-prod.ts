@@ -182,7 +182,7 @@ export async function howlMentions() {
           amount: [
             {
               denom: "ujuno",
-              amount: 0.75 * 1e6 + "",
+              amount: 1.5 * 1e6 + "",
             },
           ],
         },
