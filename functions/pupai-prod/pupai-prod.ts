@@ -11,6 +11,8 @@ import { junoConfig } from "./components/cosmwasm/networks";
 import { Configuration, OpenAIApi } from "openai";
 import { queryGPT } from "./components/queryGPT";
 import { randomUUID } from "crypto";
+import * as daoUtils from '@dao-dao/state'
+
 
 
 function proposalToText(proposal: any) {
@@ -29,7 +31,7 @@ function proposalToText(proposal: any) {
         if (!!msg) {
           try {
             m.wasm.execute.msg = JSON.parse(atob(msg))
-          } catch(e) {
+          } catch (e) {
 
           }
         }
@@ -45,7 +47,8 @@ function proposalToText(proposal: any) {
 
 export async function howlMentions() {
   const BOT_USERNAME = 'pupai';
-  const PROPOSALS_ADDRESS = 'juno1v30x8qdlqrj3443r7mw3zdxph3ywc209kxkwtahmlacsa58zaktsx3atkd'
+  const PROPOSALS_ADDRESS = 'juno1v30x8qdlqrj3443r7mw3zdxph3ywc209kxkwtahmlacsa58zaktsx3atkd';
+  const VOTING_ADDRESS = 'juno1v30x8qdlqrj3443r7mw3zdxph3ywc209kxkwtahmlacsa58zaktsx3atkd';
   const client = await connect(process.env.HOWL_PUPBOT_MNEMONIC!, junoConfig)
   let { proposals } = await client.client.queryContractSmart(PROPOSALS_ADDRESS, {
     reverse_proposals: {
@@ -53,8 +56,27 @@ export async function howlMentions() {
     }
   });
 
-  for (let { proposal } of proposals) {
+  
+
+  for (let { proposal, id } of proposals) {
     console.log(proposalToText(proposal))
+    const prompt = proposalToText(proposal);
+    if (!prompt) {
+      continue;
+    }
+    const output = await queryGPT(prompt, 'hooman subjecc', false);
+    const isOpen = proposal.status === 'open';
+    const isExecuted = proposal.status === 'executed';
+    const vote = output.match(/VOTE: (.*)/)[1];
+    const reason = output.match(/REASON: (.*)/)[1];
+    if (isOpen) {
+      const vote_res = await client.client.execute(client.address, VOTING_ADDRESS, {
+        "vote": {
+          "proposal_id": id,
+          "vote": vote
+        }
+      }, "auto", reason);
+    }
   }
 
   // const hasAlreadyReplied = (postId: string) => {

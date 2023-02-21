@@ -16,12 +16,12 @@ const loadTrainingSample = (() => {
   let lastUpdated = 0;
   const loadData = async (): Promise<any> => {
     const gist = await octokit.request(
-      "GET /gists/95b2324aa0d55b7bdf0a44a1bfb7a028",
+      "GET /gists/c94317654cfcff343e894a50fb71a035",
       {
-        gist_id: "95b2324aa0d55b7bdf0a44a1bfb7a028",
+        gist_id: "c94317654cfcff343e894a50fb71a035",
       }
     );
-    return gist.data.files["openai-training-samples.txt"].content;
+    return gist.data.files["pupai-training-data.txt"].content;
   };
   return async () => {
     if (Date.now() - lastUpdated > CACHE_TIMEOUT) {
@@ -37,17 +37,17 @@ export const queryGPT = async function handler(
   increaseInnocence = false
 ) {
   const process = async (text) => {
-    text = text.replace("/hoomanize ", "");
     const isDog = true;
-    const dogModifier = increaseInnocence ? ` (very innocent)` : "";
-    const sampleText =
-      !isDog
-        ? `dog (named ${name}): "${text}"\nhuman: `
-        : `human (named ${name}): "${text}"\ndog${dogModifier}:`;
-    const response = await openai.createCompletion("text-davinci-002", {
+    const sampleText = `
+
+<!-- PUPAI JOB SAMPLE -->
+${text}
+
+<!-- PUPAI OUTPUT SAMPLE -->`
+    const response = await openai.createCompletion("text-davinci-003", {
       prompt: `${await loadTrainingSample()}${sampleText}`,
-      temperature: 0,
-      max_tokens: 70,
+      temperature: 0.7,
+      max_tokens: 256,
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0,
@@ -74,11 +74,7 @@ export const queryGPT = async function handler(
       // .replace(/\!/g, "\\!");
   };
   try {
-    let result = await process(text).catch(() =>
-      process(
-        `If i muttered '${text}' incomprehenzibly. how would u rezpond? try to uze my name in the rezponze.`
-      )
-    );
+    let result = await process(text);
     return result;
   } catch (e) {
     if (e.response) {
