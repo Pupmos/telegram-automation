@@ -201,11 +201,12 @@ export async function howlMentions() {
           amount: [
             {
               denom: "ujuno",
-              amount: 2.5 * 1e6 + "",
+              amount: 0.25 * 1e6 + "",
             },
           ],
         },
       },
+      //
     };
     const rewardMsgs = responses
       .filter((r) => !!r.pupaiCw20Reward)
