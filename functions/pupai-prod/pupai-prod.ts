@@ -63,6 +63,7 @@ function randomResponseLabel() {
   return labels[Math.floor(Math.random() * labels.length)].toUpperCase();
 }
 export async function howlMentions() {
+  const name = await nameService("juno1njyvry0t3j5dy4rr6ar5zfglg3cy2e8u745hl7");
   const BOT_USERNAME = "pupai";
   // const PUPAI_ADDRESS = "juno175umqftc5jtxtl5gqt7g7w3c9w3v55prkegvqk";
   const PROPOSALS_ADDRESS =
