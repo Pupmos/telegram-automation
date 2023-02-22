@@ -95,9 +95,10 @@ export async function howlMentions() {
   for (let { proposal, id } of proposals) {
     const isOpen = proposal.status === "open";
     const isExecuted = proposal.status === "executed";
+    const isPassed = proposal.status === "passed";
     const prompt = proposalToText(proposal);
     if (!prompt || !isOpen) {
-      if (proposal.proposer === client.address && !isExecuted) {
+      if (proposal.proposer === client.address && !isExecuted && isPassed) {
         // execute the proposal to pay back deposit to the bot.
         // uses unshift so the deposit can be returned before the next deposit is made
         messages.unshift({
