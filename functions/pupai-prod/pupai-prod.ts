@@ -1,5 +1,5 @@
 import { MsgExecuteContract } from "cosmjs-types/cosmwasm/wasm/v1/tx";
-import { toUtf8 } from "cosmwasm";
+import { toBase64, toUtf8 } from "cosmwasm";
 import Telegraf from "telegraf";
 import { getAddressAction } from "./actions/address-cw20";
 import { cacheAction } from "./actions/cache";
@@ -70,6 +70,8 @@ export async function howlMentions() {
     "juno1v30x8qdlqrj3443r7mw3zdxph3ywc209kxkwtahmlacsa58zaktsx3atkd";
   const PRE_PROPOSE_ADDRESS =
     "juno1cq9zpqtfnqh7dhya20sp27ddzxmw9pudxz0qnlv6u702g8r5vy6qa2hrmu";
+  const PUPAI_CW20_ADDRESS =
+    "juno1g7xty4grng22aly4zpwpzvg2vs4wp2yaz344djph60d54sx4zr6qz2q56j";
   const client = await connect(process.env.HOWL_PUPBOT_MNEMONIC!, junoConfig);
   let { proposals } = await client.client.queryContractSmart(
     PROPOSALS_ADDRESS,
@@ -86,6 +88,8 @@ export async function howlMentions() {
     description: string;
     is_worthy: boolean;
     raw: string;
+    proposer: string;
+    pupaiCw20Reward: number;
   }[] = [];
   const messages: EncodeObject[] = [];
   for (let { proposal, id } of proposals) {
@@ -143,19 +147,28 @@ export async function howlMentions() {
         .find((p) => p.startsWith("REASON: "))
         ?.replace("REASON: ", "")
         .trim() || "";
+    const reward =
+      parts
+        .find((p) => p.startsWith("REWARD: "))
+        ?.replace("REWARD: ", "")
+        .trim() || "";
     if (isOpen) {
       // the title of the response proposal should be the first X sentences of the reason cumulatively under 40 characters
       // the description should be the entire reason
       const title = reason.substring(0, 250);
       const description = reason;
-
+      // extract number only from reward
+      const pupaiCw20Reward = parseInt(reward);
       responses.push({
         proposal_id: id,
         title,
         description,
         raw: reason,
         is_worthy: vote === "yes",
+        proposer: proposal.proposer,
+        pupaiCw20Reward: pupaiCw20Reward >= 1 ? pupaiCw20Reward : 0,
       });
+
       messages.push({
         typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
         value: MsgExecuteContract.fromPartial({
@@ -188,6 +201,28 @@ export async function howlMentions() {
         },
       },
     };
+    const rewardMsgs = responses
+      .filter((r) => !!r.pupaiCw20Reward)
+      .map((r) => {
+        return {
+          wasm: {
+            execute: {
+              contract_addr: PUPAI_CW20_ADDRESS,
+              funds: [],
+              msg: toBase64(
+                toUtf8(
+                  JSON.stringify({
+                    mint: {
+                      recipient: r.proposer,
+                      amount: (r.pupaiCw20Reward * 1e6).toFixed(0),
+                    },
+                  })
+                )
+              ),
+            },
+          },
+        };
+      });
     messages.push({
       typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
       value: MsgExecuteContract.fromPartial({
@@ -211,7 +246,7 @@ export async function howlMentions() {
                       return `# *\`${p.description}\`*`;
                     })
                     .join("\n\n\n"),
-                  msgs: [bankMsg],
+                  msgs: [bankMsg, ...rewardMsgs],
                 },
               },
             },
