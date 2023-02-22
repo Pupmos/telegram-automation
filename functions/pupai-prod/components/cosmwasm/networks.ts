@@ -30,3 +30,21 @@ export const junoConfig: Network = {
   feeToken: "ujuno",
   cw20CodeId: 262,
 };
+
+export const osmoConfig: Network = {
+  chainId: "osmosis-1",
+  rpcEndpoint: "https://rpc-osmosis.pupmos.network/",
+  prefix: "osmo",
+  gasPrice: GasPrice.fromString("0.025uosmo"),
+  feeToken: "uosmo",
+  cw20CodeId: 262,
+};
+
+export const stargazeConfig: Network = {
+  chainId: "stargaze-1",
+  rpcEndpoint: "https://rpc-stargaze.pupmos.network/",
+  prefix: "stars",
+  gasPrice: GasPrice.fromString("0.025ustars"),
+  feeToken: "ustars",
+  cw20CodeId: 262,
+};

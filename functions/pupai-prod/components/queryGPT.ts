@@ -40,7 +40,7 @@ export const queryGPT = async function handler(
     const isDog = true;
     const sampleText = `
 
-<!-- PUPAI JOB SAMPLE -->
+<!-- PUPAI JOB SAMPLE (submitted by ${name}) -->
 ${text}
 
 <!-- PUPAI OUTPUT SAMPLE -->`;

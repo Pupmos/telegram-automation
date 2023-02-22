@@ -13,8 +13,9 @@ import { queryGPT } from "./components/queryGPT";
 import { randomUUID } from "crypto";
 import * as daoUtils from "@dao-dao/state";
 import { EncodeObject } from "@cosmjs/proto-signing";
+import { nameService } from "./components/cosmwasm/name-service";
 
-function proposalToText(proposal: any) {
+async function proposalToText(proposal: any) {
   // if (!proposal || proposal?.status !== 'open') {
   //   return;
   // }
@@ -96,7 +97,7 @@ export async function howlMentions() {
     const isOpen = proposal.status === "open";
     const isExecuted = proposal.status === "executed";
     const isPassed = proposal.status === "passed";
-    const prompt = proposalToText(proposal);
+    const prompt = await proposalToText(proposal);
     if (!prompt || !isOpen) {
       if (proposal.proposer === client.address && !isExecuted && isPassed) {
         // execute the proposal to pay back deposit to the bot.
@@ -136,7 +137,10 @@ export async function howlMentions() {
       });
       continue;
     }
-    const output = await queryGPT(prompt, "hooman subjecc", false);
+    const proposerName =
+      (await nameService(proposal.proposer).catch(() => undefined)) ||
+      "hooman subjecc";
+    const output = await queryGPT(prompt, proposerName, false);
     const parts = output.split("\n");
     const vote = parts
       .find((p) => p.startsWith("VOTE: "))
