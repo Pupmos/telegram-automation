@@ -98,7 +98,27 @@ export async function howlMentions() {
     const isOpen = proposal.status === "open";
     const isExecuted = proposal.status === "executed";
     const isPassed = proposal.status === "passed";
+    const isRejected = proposal.status === "rejected";
     const prompt = await proposalToText(proposal);
+    if (isRejected) {
+      // close the proposal to pay back deposit to the dao.
+      // uses unshift so the deposit can be returned before the next deposit is made
+      messages.unshift({
+        typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
+        value: MsgExecuteContract.fromPartial({
+          sender: client.address,
+          contract: PROPOSALS_ADDRESS,
+          msg: toUtf8(
+            JSON.stringify({
+              close: {
+                proposal_id: id,
+              },
+            })
+          ),
+        }),
+      });
+      continue;
+    }
     if (!prompt || !isOpen) {
       if (proposal.proposer === client.address && !isExecuted && isPassed) {
         // execute the proposal to pay back deposit to the bot.

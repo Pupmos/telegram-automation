@@ -20,7 +20,10 @@
     "cosmjs-types": "^0.5.2",
     "cosmwasm": "^1.1.1",
     "cross-fetch": "^3.1.5",
+    "files-from-path": "^0.2.6",
+    "handwritten.js": "^18.11.3",
     "netlify-lambda": "^2.0.1",
+    "nft.storage": "^7.0.0",
     "openai": "^2.0.5",
     "telegraf": "^3.36.0"
   },
