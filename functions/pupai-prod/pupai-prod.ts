@@ -66,6 +66,8 @@ export async function howlMentions() {
   const name = await nameService("juno1njyvry0t3j5dy4rr6ar5zfglg3cy2e8u745hl7");
   const BOT_USERNAME = "pupai";
   // const PUPAI_ADDRESS = "juno175umqftc5jtxtl5gqt7g7w3c9w3v55prkegvqk";
+  const TREASURY_ADDRESS =
+    "juno13z5hud2xucpu2jwr8258jldj5p8r396l6xjudrp9c25z2gawza8s5vv0yg";
   const PROPOSALS_ADDRESS =
     "juno1v30x8qdlqrj3443r7mw3zdxph3ywc209kxkwtahmlacsa58zaktsx3atkd";
   const VOTING_ADDRESS =
@@ -74,6 +76,8 @@ export async function howlMentions() {
     "juno1cq9zpqtfnqh7dhya20sp27ddzxmw9pudxz0qnlv6u702g8r5vy6qa2hrmu";
   const PUPAI_CW20_ADDRESS =
     "juno1g7xty4grng22aly4zpwpzvg2vs4wp2yaz344djph60d54sx4zr6qz2q56j";
+  const PUPAI_STAKING_ADRESS =
+    "juno1nnu6v7m7sgpn9vnashmy62hk9xllu5ueprk4khdvl82l4d5enhnqshheta";
   const client = await connect(process.env.HOWL_PUPBOT_MNEMONIC!, junoConfig);
   let { proposals } = await client.client.queryContractSmart(
     PROPOSALS_ADDRESS,
@@ -250,6 +254,30 @@ export async function howlMentions() {
           },
         };
       });
+    const totalReward = responses.reduce((acc, r) => {
+      return acc + r.pupaiCw20Reward;
+    }, 0);
+    if (totalReward > 0) {
+      rewardMsgs.push({
+        wasm: {
+          execute: {
+            contract_addr: PUPAI_CW20_ADDRESS,
+            funds: [],
+            msg: toBase64(
+              toUtf8(
+                JSON.stringify({
+                  mint: {
+                    recipient: TREASURY_ADDRESS,
+                    // 10x the total reward to pay for the txs
+                    amount: (totalReward * 1e6 * 10).toFixed(0),
+                  },
+                })
+              )
+            ),
+          },
+        },
+      });
+    }
     messages.push({
       typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
       value: MsgExecuteContract.fromPartial({
@@ -287,6 +315,30 @@ export async function howlMentions() {
             amount: 2.049 * 1e6 + "",
           },
         ],
+      }),
+    });
+
+    // reward msg
+    messages.push({
+      typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
+      value: MsgExecuteContract.fromPartial({
+        sender: client.address,
+        contract: PUPAI_CW20_ADDRESS,
+        msg: toUtf8(
+          JSON.stringify({
+            send: {
+              amount: (totalReward * 1e6).toFixed(0),
+              contract: PUPAI_STAKING_ADRESS,
+              msg: toBase64(
+                toUtf8(
+                  JSON.stringify({
+                    fund: {},
+                  })
+                )
+              ),
+            },
+          })
+        ),
       }),
     });
   }
