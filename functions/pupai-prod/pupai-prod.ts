@@ -261,7 +261,9 @@ export async function howlMentions() {
               msg: {
                 propose: {
                   title: (
-                    `🐶 PUPAI: ` +
+                    `${responses.some((r) => r.is_worthy) ? "✅" : ""}${
+                      responses.some((r) => !r.is_worthy) ? "❌" : ""
+                    } 𝗣𝗨𝗣𝗔𝗜: ` +
                     responses
                       .map((p) => {
                         return p.title;
