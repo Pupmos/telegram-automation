@@ -319,28 +319,30 @@ export async function howlMentions() {
     });
 
     // reward msg
-    messages.push({
-      typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
-      value: MsgExecuteContract.fromPartial({
-        sender: client.address,
-        contract: PUPAI_CW20_ADDRESS,
-        msg: toUtf8(
-          JSON.stringify({
-            send: {
-              amount: (totalReward * 1e6).toFixed(0),
-              contract: PUPAI_STAKING_ADRESS,
-              msg: toBase64(
-                toUtf8(
-                  JSON.stringify({
-                    fund: {},
-                  })
-                )
-              ),
-            },
-          })
-        ),
-      }),
-    });
+    if (totalReward > 0) {
+      messages.push({
+        typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
+        value: MsgExecuteContract.fromPartial({
+          sender: client.address,
+          contract: PUPAI_CW20_ADDRESS,
+          msg: toUtf8(
+            JSON.stringify({
+              send: {
+                amount: (totalReward * 1e6).toFixed(0),
+                contract: PUPAI_STAKING_ADRESS,
+                msg: toBase64(
+                  toUtf8(
+                    JSON.stringify({
+                      fund: {},
+                    })
+                  )
+                ),
+              },
+            })
+          ),
+        }),
+      });
+    }
   }
   if (messages.length) {
     const res = await client.client.signAndBroadcast(
