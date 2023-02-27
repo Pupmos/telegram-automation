@@ -182,6 +182,7 @@ export async function howlMentions() {
         .find((p) => p.startsWith("REWARD: "))
         ?.replace("REWARD: ", "")
         .trim() || "";
+    console.log(JSON.stringify({ vote, reason, reward }, null, 2));
     if (isOpen) {
       // the title of the response proposal should be the first X sentences of the reason cumulatively under 40 characters
       // the description should be the entire reason
