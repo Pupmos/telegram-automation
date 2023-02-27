@@ -287,7 +287,7 @@ export async function howlMentions() {
               toUtf8(
                 JSON.stringify({
                   send: {
-                    amount: (totalReward * 1e6).toFixed(0),
+                    amount: (totalReward * 1e6 * 10).toFixed(0),
                     contract: PUPAI_STAKING_ADRESS,
                     msg: toBase64(
                       toUtf8(
