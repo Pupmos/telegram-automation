@@ -124,7 +124,8 @@ export async function howlMentions() {
       continue;
     }
     if (!prompt || !isOpen) {
-      if (proposal.proposer === client.address && !isExecuted && isPassed) {
+      // add if only execute own: proposal.proposer === client.address
+      if (!isExecuted && isPassed) {
         // execute the proposal to pay back deposit to the bot.
         // uses unshift so the deposit can be returned before the next deposit is made
         messages.unshift({
