@@ -67,7 +67,7 @@ export async function howlMentions() {
   const BOT_USERNAME = "pupai";
   // const PUPAI_ADDRESS = "juno175umqftc5jtxtl5gqt7g7w3c9w3v55prkegvqk";
   const TREASURY_ADDRESS =
-    "juno13z5hud2xucpu2jwr8258jldj5p8r396l6xjudrp9c25z2gawza8s5vv0yg";
+    "juno1dc4kgc8nms9g8r92juc9cv5njay6p7rtet7vl38mup0aa7llvqjqqc2npd";
   const PROPOSALS_ADDRESS =
     "juno1v30x8qdlqrj3443r7mw3zdxph3ywc209kxkwtahmlacsa58zaktsx3atkd";
   const VOTING_ADDRESS =
@@ -233,7 +233,7 @@ export async function howlMentions() {
       },
       //
     };
-    const rewardMsgs = responses
+    const rewardMsgs: any[] = responses
       .filter((r) => !!r.pupaiCw20Reward)
       .map((r) => {
         return {
@@ -271,6 +271,31 @@ export async function howlMentions() {
                     recipient: TREASURY_ADDRESS,
                     // 10x the total reward to pay for the txs
                     amount: (totalReward * 1e6 * 10).toFixed(0),
+                  },
+                })
+              )
+            ),
+          },
+        },
+      });
+      rewardMsgs.push({
+        wasm: {
+          execute: {
+            contract_addr: PUPAI_CW20_ADDRESS,
+            funds: [],
+            msg: toBase64(
+              toUtf8(
+                JSON.stringify({
+                  send: {
+                    amount: (totalReward * 1e6).toFixed(0),
+                    contract: PUPAI_STAKING_ADRESS,
+                    msg: toBase64(
+                      toUtf8(
+                        JSON.stringify({
+                          fund: {},
+                        })
+                      )
+                    ),
                   },
                 })
               )
@@ -318,32 +343,6 @@ export async function howlMentions() {
         ],
       }),
     });
-
-    // reward msg
-    if (totalReward > 0) {
-      messages.push({
-        typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
-        value: MsgExecuteContract.fromPartial({
-          sender: client.address,
-          contract: PUPAI_CW20_ADDRESS,
-          msg: toUtf8(
-            JSON.stringify({
-              send: {
-                amount: (totalReward * 1e6).toFixed(0),
-                contract: PUPAI_STAKING_ADRESS,
-                msg: toBase64(
-                  toUtf8(
-                    JSON.stringify({
-                      fund: {},
-                    })
-                  )
-                ),
-              },
-            })
-          ),
-        }),
-      });
-    }
   }
   if (messages.length) {
     const res = await client.client.signAndBroadcast(
