@@ -13,6 +13,10 @@ bot.start((ctx) => {
   return startAction(ctx, bot);
 });
 
+bot.command("brc20", (ctx) => {
+  return brc20Action(ctx, bot);
+})
+
 bot.on("text", async (ctx, next) => {
   if (ctx.chat?.type === "private") {
     return startAction(ctx, bot);
