@@ -2,6 +2,17 @@ import Telegraf from "telegraf"
 import { TelegrafContext } from "telegraf/typings/context"
 import fetch from 'cross-fetch';
 
+async function loadSupply(symbol: string) {
+  const { data: tokenStats } = await fetch(`https://unisat.io/brc20-api-v2/brc20/${symbol.toUpperCase()}/info`, {
+    "headers": {
+      "accept": "application/json, text/plain, */*",
+    },
+  }).then(r => r.json());
+  return {
+      confirmed: +tokenStats.confirmedMinted
+  }
+}
+
 async function loadPriceData(symbol: string) {
   const splitCase = s => !s || s.indexOf(' ') >= 0 ? s :
   (s.charAt(0).toUpperCase() + s.substring(1))
@@ -24,7 +35,8 @@ async function loadPriceData(symbol: string) {
       brc20 => brc20.tick == symbol.trim().toLowerCase()
   );
   const usdPrice = (btcPrice / 100000000) * tokenData.curPrice;
-  return `\t${tokenData.curPrice} sats \n\t$${new Intl.NumberFormat().format(usdPrice)} USD`
+  const supply = await loadSupply(symbol);
+  return `Price:\n\t${tokenData.curPrice} sats \n\t$${new Intl.NumberFormat().format(usdPrice)} USD\nMarket Cap:\n\t${supply.confirmed * tokenData.curPrice} sats\n\t${new Intl.NumberFormat().format(usdPrice * supply.confirmed)}`
 }
 
 export const brc20Action = async (ctx: TelegrafContext, bot: Telegraf<TelegrafContext>) => {
