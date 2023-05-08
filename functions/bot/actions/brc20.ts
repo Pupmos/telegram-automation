@@ -24,7 +24,7 @@ async function loadPriceData(symbol: string) {
       brc20 => brc20.tick == symbol.trim().toLowerCase()
   );
   const usdPrice = (btcPrice / 100000000) * tokenData.curPrice;
-  return `${tokenData.curPrice} sats | $${new Intl.NumberFormat().format(usdPrice)} USD`
+  return `\t${tokenData.curPrice} sats \n\t$${new Intl.NumberFormat().format(usdPrice)} USD`
 }
 
 export const brc20Action = async (ctx: TelegrafContext, bot: Telegraf<TelegrafContext>) => {
@@ -32,7 +32,7 @@ export const brc20Action = async (ctx: TelegrafContext, bot: Telegraf<TelegrafCo
   try {
     const ticker = ctx.message!.text.trim().split(' ').pop()!;
     const price = await loadPriceData(ticker);
-    return ctx.replyWithMarkdownV2(`\`"${ticker.toUpperCase()} PRICE: ${price}"\``, {
+    return ctx.replyWithMarkdownV2(`\`${ticker.toUpperCase()}: \n${price}\``, {
       reply_to_message_id: ctx.message!.message_id,
       allow_sending_without_reply: true
     })
