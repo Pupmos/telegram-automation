@@ -36,7 +36,7 @@ async function loadPriceData(symbol: string) {
   );
   const usdPrice = (btcPrice / 100000000) * tokenData.curPrice;
   const supply = await loadSupply(symbol);
-  return `Price:\n\t${tokenData.curPrice} sats \n\t$${new Intl.NumberFormat().format(usdPrice)} USD\nMarket Cap:\n\t${supply.confirmed * tokenData.curPrice} sats\n\t${new Intl.NumberFormat().format(usdPrice * supply.confirmed)}`
+  return `Price:\n\t${tokenData.curPrice} sats \n\t$${new Intl.NumberFormat().format(usdPrice)} USD\nMarket Cap:\n\t${supply.confirmed * tokenData.curPrice} sats\n\t$${new Intl.NumberFormat().format(usdPrice * supply.confirmed)} USD`
 }
 
 export const brc20Action = async (ctx: TelegrafContext, bot: Telegraf<TelegrafContext>) => {
