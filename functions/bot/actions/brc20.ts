@@ -32,7 +32,7 @@ async function loadPriceData(symbol: string) {
 
   const btcPrice = brc20Data.BTCPrice;
   const tokenData = brc20Data.list.find(
-      brc20 => brc20.tick == symbol.trim().toLowerCase()
+      brc20 => brc20.tick.toLowerCase() == symbol.trim().toLowerCase()
   );
   const usdPrice = (btcPrice / 100000000) * tokenData.curPrice;
   const supply = await loadSupply(symbol);
