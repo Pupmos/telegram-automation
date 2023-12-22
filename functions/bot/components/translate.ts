@@ -47,7 +47,7 @@ export const translate = async function handler(
     const response = await openai.createCompletion("gpt-3.5-turbo-instruct", {
       prompt: `${await loadTrainingSample()}${sampleText}`,
       temperature: 1.01,
-      max_tokens: 200,
+      max_tokens: 450,
       top_p: 0.84,
       frequency_penalty: 0,
       presence_penalty: 0,
