@@ -44,7 +44,7 @@ export const translate = async function handler(
       formattedText == text
         ? `dog (named ${name}): "${text}"\nhuman: `
         : `human (named ${name}): "${formattedText}"\ndog${dogModifier}:`;
-    const response = await openai.createCompletion("text-davinci-002", {
+    const response = await openai.createCompletion("gpt-3.5-turbo-instruct", {
       prompt: `${await loadTrainingSample()}${sampleText}`,
       temperature: 0,
       max_tokens: 147,
