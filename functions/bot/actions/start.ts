@@ -16,6 +16,8 @@ export const startAction = async (
   if (isBot) {
     return ctx.reply(`Sorry I only interact with humans!`);
   }
+
+  console.log("CHAT ID: " + ctx.message?.chat.id);
   let msg: Message;
   msg = ctx.message;
   // if (ctx.chat?.type !== 'private') {
