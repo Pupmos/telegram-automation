@@ -44,13 +44,14 @@ export const translate = async function handler(
       formattedText == text
         ? `dog (named ${name}): "${text}"\nhuman: `
         : `human (named ${name}): "${formattedText}"\ndog${dogModifier}:`;
-    const response = await openai.createCompletion("text-davinci-002", {
+    const response = await openai.createCompletion("gpt-3.5-turbo-instruct", {
       prompt: `${await loadTrainingSample()}${sampleText}`,
-      temperature: 0,
-      max_tokens: 147,
-      top_p: 1,
-      frequency_penalty: 0.5,
+      temperature: 1.01,
+      max_tokens: 450,
+      top_p: 0.84,
+      frequency_penalty: 0,
       presence_penalty: 0,
+      stop: ["\\n\\n"],
     });
     // certain markdown characters break telegram https://stackoverflow.com/a/71313944
     return JSON.parse(response.data.choices[0].text.replace("\n\n", ""))

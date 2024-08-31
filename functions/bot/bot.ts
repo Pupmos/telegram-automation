@@ -4,6 +4,7 @@ import { cacheAction } from "./actions/cache";
 import { instantiateCw20Action } from "./actions/instantiate-cw20";
 import { startAction } from "./actions/start";
 import { transferCw20Action } from "./actions/transfer-cw20";
+import { brc20Action } from "./actions/brc20";
 
 // @ts-ignore
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
@@ -11,6 +12,10 @@ const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 bot.start((ctx) => {
   return startAction(ctx, bot);
 });
+
+bot.command("brc20", (ctx) => {
+  return brc20Action(ctx, bot);
+})
 
 bot.on("text", async (ctx, next) => {
   if (ctx.chat?.type === "private") {
@@ -40,6 +45,10 @@ bot.on("text", async (ctx, next) => {
 //   }
 //   return next();
 // });
+
+bot.command("brc20", (ctx) => {
+  return brc20Action(ctx, bot);
+})
 
 bot.command("hoomanize", (ctx) => {
   return startAction(ctx, bot);
