@@ -17,6 +17,8 @@ export const startAction = async (
     return ctx.reply(`Sorry I only interact with humans!`);
   }
 
+  return ctx.reply(`404 tenniz boll not found`);
+
   console.log("CHAT ID: " + ctx.message?.chat.id);
   let msg: Message;
   msg = ctx.message;
