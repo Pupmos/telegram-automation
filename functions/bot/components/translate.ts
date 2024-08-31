@@ -51,7 +51,7 @@ export const translate = async function handler(
     const res = await anthropic.messages.create({
       model: "claude-3-5-sonnet-20240620",
       // max_tokens: 1024,
-      max_tokens: 1024,
+      max_tokens: 450,
       messages: [
         { role: "user", content: `${await loadTrainingSample()}${sampleText}` },
       ],
@@ -63,6 +63,11 @@ export const translate = async function handler(
     try {
       // if in quotes, dequote
       txt = JSON.parse(txt);
+    } catch (e) {}
+
+    try {
+      // remove starting and ending quote
+      txt = txt.replace(/^"|"$/g, "");
     } catch (e) {}
 
     return txt
