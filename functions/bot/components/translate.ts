@@ -60,6 +60,11 @@ export const translate = async function handler(
     let content = res.content[0]! as TextBlock;
     let txt = content.text;
     // certain markdown characters break telegram https://stackoverflow.com/a/71313944
+    try {
+      // if in quotes, dequote
+      txt = JSON.parse(txt);
+    } catch (e) {}
+
     return txt
       .replace("\n\n", "")
       .replace(/\_/g, "\\_")
