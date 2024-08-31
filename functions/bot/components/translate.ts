@@ -1,11 +1,7 @@
+import Anthropic from "@anthropic-ai/sdk";
+import { TextBlock } from "@anthropic-ai/sdk/resources";
 import { Octokit } from "@octokit/core";
 import fetch from "cross-fetch";
-import { Configuration, OpenAIApi } from "openai";
-
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-const openai = new OpenAIApi(configuration);
 
 const CACHE_TIMEOUT = 5 * 60_000;
 
@@ -36,7 +32,7 @@ export const translate = async function handler(
   name: string,
   increaseInnocence = false
 ) {
-  const process = async (text) => {
+  const processText = async (text) => {
     text = text.replace("/hoomanize ", "");
     let formattedText = text.replace("/pup ", "");
     const dogModifier = increaseInnocence ? ` (very innocent)` : "";
@@ -44,17 +40,27 @@ export const translate = async function handler(
       formattedText == text
         ? `dog (named ${name}): "${text}"\nhuman: `
         : `human (named ${name}): "${formattedText}"\ndog${dogModifier}:`;
-    const response = await openai.createCompletion("gpt-3.5-turbo-instruct", {
-      prompt: `${await loadTrainingSample()}${sampleText}`,
-      temperature: 1.01,
-      max_tokens: 450,
-      top_p: 0.84,
-      frequency_penalty: 0,
-      presence_penalty: 0,
-      stop: ["\\n\\n"],
+
+    console.log(process.env.AHTHROPIC);
+    const anthropic = new Anthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY,
+      // @ts-ignore
+      apiToken: process.env.ANTHROPIC_API_KEY,
     });
+
+    const res = await anthropic.messages.create({
+      model: "claude-3-5-sonnet-20240620",
+      // max_tokens: 1024,
+      max_tokens: 1024,
+      messages: [
+        { role: "user", content: `${await loadTrainingSample()}${sampleText}` },
+      ],
+    });
+
+    let content = res.content[0]! as TextBlock;
+    let txt = content.text;
     // certain markdown characters break telegram https://stackoverflow.com/a/71313944
-    return JSON.parse(response.data.choices[0].text.replace("\n\n", ""))
+    return JSON.parse(txt.replace("\n\n", ""))
       .replace(/\_/g, "\\_")
       .replace(/\*/g, "\\*")
       .replace(/\[/g, "\\[")
@@ -75,8 +81,8 @@ export const translate = async function handler(
       .replace(/\!/g, "\\!");
   };
   try {
-    let result = await process(text).catch(() =>
-      process(
+    let result = await processText(text).catch(() =>
+      processText(
         `If i muttered '${text}' incomprehenzibly. how would u rezpond? try to uze my name in the rezponze.`
       )
     );

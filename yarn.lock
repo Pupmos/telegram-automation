@@ -14,22 +14,6 @@
   version "0.27.1"
   resolved "https://registry.npmjs.org/@anthropic-ai/sdk/-/sdk-0.27.1.tgz#96fb3d4ace581455e2b34783b509f39a03856eb1"
   integrity sha512-AKFd/E8HO26+DOVPiZpEked3Pm2feA5d4gcX2FcJXr9veDkXbKO90hr2C7N2TL7mPIMwm040ldXlsIZQ416dHg==
-<<<<<<< HEAD
-  dependencies:
-    "@types/node" "^18.11.18"
-    "@types/node-fetch" "^2.6.4"
-    abort-controller "^3.0.0"
-    agentkeepalive "^4.2.1"
-    form-data-encoder "1.7.2"
-    formdata-node "^4.3.2"
-    node-fetch "^2.6.7"
-
-"@apollo/client@^3.6.9":
-  version "3.7.9"
-  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.7.9.tgz#459454dc4a7c81adaa66e13e626ce41f633dc862"
-  integrity sha512-YnJvrJOVWrp4y/zdNvUaM8q4GuSHCEIecsRDTJhK/veT33P/B7lfqGJ24NeLdKMj8tDEuXYF7V0t+th4+rgC+Q==
-=======
->>>>>>> safe-master-9ae8adcafe1d22c7049aa69aec3a97c14445025e
   dependencies:
     "@types/node" "^18.11.18"
     "@types/node-fetch" "^2.6.4"
@@ -3783,14 +3767,11 @@
   resolved "https://registry.npmjs.org/@types/node/-/node-13.13.52.tgz"
   integrity sha512-s3nugnZumCC//n4moGGe6tkNMyYEdaDBitVjwPxXmR5lnMG5dHePinH2EdxkG3Rh1ghFHHixAG4NJhpJW1rthQ==
 
-<<<<<<< HEAD
-=======
 "@types/node@^14.14.31":
   version "14.18.45"
   resolved "https://registry.npmjs.org/@types/node/-/node-14.18.45.tgz"
   integrity sha512-Nd+FPp60jEaJpm4LAxuLT3wIhB4k0Jdj9DAP4ydqGyMg8DhE+7oM1we+QkwOkpMySTjcqcNfPOWY5kBuAOhkeg==
 
->>>>>>> safe-master-9ae8adcafe1d22c7049aa69aec3a97c14445025e
 "@types/node@^18.11.18":
   version "18.19.47"
   resolved "https://registry.npmjs.org/@types/node/-/node-18.19.47.tgz#18076201ad7dd3445046df6ce9ead5fe5abd9387"
@@ -4646,7 +4627,7 @@ axios@^0.21.1, axios@^0.21.2:
 
 axios@^0.26.0:
   version "0.26.1"
-  resolved "https://registry.npmjs.org/axios/-/axios-0.26.1.tgz"
+  resolved "https://registry.npmjs.org/axios/-/axios-0.26.1.tgz#1ede41c51fcf51bbbd6fd43669caaa4f0495aaa9"
   integrity sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA==
   dependencies:
     follow-redirects "^1.14.8"
@@ -7476,10 +7457,15 @@ follow-redirects@^1.0.0:
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.1.tgz"
   integrity sha512-yLAMQs+k0b2m7cVxpS1VKJVvoz7SS9Td1zss3XRwXj+ZDH00RJgnuLx7E44wx02kQLrdM3aOOy+FpzS7+8OizA==
 
-follow-redirects@^1.10.0, follow-redirects@^1.14.0, follow-redirects@^1.14.8, follow-redirects@^1.14.9:
+follow-redirects@^1.10.0, follow-redirects@^1.14.0, follow-redirects@^1.14.9:
   version "1.15.2"
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.2.tgz"
   integrity sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==
+
+follow-redirects@^1.14.8:
+  version "1.15.6"
+  resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.6.tgz#7f815c0cda4249c74ff09e95ef97c23b5fd0399b"
+  integrity sha512-wWN62YITEaOpSK584EZXJafH1AGpO8RVgElfkuXbTOrPX4fIfOyEpW/CsiNd8JdYrAoOvafRTOEnvsO++qCqFA==
 
 fontkit@^1.8.0:
   version "1.9.0"
@@ -11111,7 +11097,7 @@ open@^8.0.4:
 
 openai@^2.0.5:
   version "2.0.5"
-  resolved "https://registry.npmjs.org/openai/-/openai-2.0.5.tgz"
+  resolved "https://registry.npmjs.org/openai/-/openai-2.0.5.tgz#dc1e0b0588ce9464e62af87f86a18195de2baa11"
   integrity sha512-M/drXV2QYdRhmB5EhAINpeA4oGzj0M6mSVfi8o8Rex3Re+yEnSBMUExtGZSlbVRAKpIvTLbq0oC7bgHBaSnjLw==
   dependencies:
     axios "^0.26.0"
