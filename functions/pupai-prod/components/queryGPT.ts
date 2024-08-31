@@ -1,6 +1,8 @@
 import { Octokit } from "@octokit/core";
 import fetch from "cross-fetch";
 import { Configuration, OpenAIApi } from "openai";
+import Anthropic from "@anthropic-ai/sdk";
+import { TextBlock } from "@anthropic-ai/sdk/resources/messages";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -36,7 +38,7 @@ export const queryGPT = async function handler(
   name: string,
   increaseInnocence = false
 ) {
-  const process = async (text) => {
+  const processText = async (text) => {
     const isDog = true;
     const sampleText = `
 
@@ -44,17 +46,37 @@ export const queryGPT = async function handler(
 ${text}
 
 <!-- PUPAI OUTPUT SAMPLE -->`;
-    const response = await openai.createCompletion("text-davinci-003", {
-      prompt: `${await loadTrainingSample()}${sampleText}`,
-      temperature: 0.7,
-      max_tokens: 256,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
+
+    console.log(process.env.AHTHROPIC);
+    const anthropic = new Anthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY,
+      // @ts-ignore
+      apiToken: process.env.ANTHROPIC_API_KEY,
     });
-    const resText = response.data.choices?.[0].text;
-    // certain markdown characters break telegram https://stackoverflow.com/a/71313944
-    return resText!;
+
+    const res = await anthropic.messages.create({
+      model: "claude-3-5-sonnet-20240620",
+      // max_tokens: 1024,
+      max_tokens: 1024,
+      messages: [
+        { role: "user", content: `${await loadTrainingSample()}${sampleText}` },
+      ],
+    });
+
+    let content = res.content[0]! as TextBlock;
+    return content.text;
+    // const response = await openai.createCompletion("text-davinci-003", {
+    //   prompt: `${await loadTrainingSample()}${sampleText}`,
+    //   temperature: 0.7,
+    //   max_tokens: 256,
+    //   top_p: 1,
+    //   frequency_penalty: 0,
+    //   presence_penalty: 0,
+    // });
+    // const resText = response.data.choices?.[0].text;
+    // // certain markdown characters break telegram https://stackoverflow.com/a/71313944
+    // return resText!;
+
     // .replace(/\_/g, "\\_")
     // .replace(/\*/g, "\\*")
     // .replace(/\[/g, "\\[")
@@ -63,7 +85,7 @@ ${text}
     // .replace(/\)/g, "\\)")
     // .replace(/\~/g, "\\~")
     // .replace(/\`/g, "\\`")
-    // .replace(/\>/g, "\\>")
+    // .replace(/\>/g, "\\>")--
     // .replace(/\#/g, "\\#")
     // .replace(/\+/g, "\\+")
     // .replace(/\-/g, "\\-")
@@ -75,7 +97,7 @@ ${text}
     // .replace(/\!/g, "\\!");
   };
   try {
-    let result = await process(text);
+    let result = await processText(text);
     return result;
   } catch (e) {
     if (e.response) {
